@@ -4,7 +4,7 @@ Ameer Alnasser
 Ryan Lee
 pd 8
 ---------------------
-<Project Title/Description>
+Currency Exchange BlackJack w/ a Joke
 
 
  ______   ______   __   __   __       ______   _______     
@@ -18,7 +18,8 @@ pd 8
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
 
-fristL -- TIMESTAMP
+gordonM -- 2022-12-06 19:45
 --------------------------------------------------------------
-<Thing fristL did.>
+Revised design doc. Corrected who we are playing against, clarified how loses work, fixed component and 
+site maps, added a proposal to explain vision. 
 ==============================================================
