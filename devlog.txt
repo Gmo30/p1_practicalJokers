@@ -23,3 +23,9 @@ gordonM -- 2022-12-06 19:45
 Revised design doc. Corrected who we are playing against, clarified how loses work, fixed component and 
 site maps, added a proposal to explain vision. 
 ==============================================================
+
+ameerA -- 2022-12-07 13:12
+--------------------------------------------------------------
+Design doc further revised to clarify our database separations, as well as added an API that will be used,
+potentially overriding the exchangerate api, to be tested soon. 
+==============================================================
