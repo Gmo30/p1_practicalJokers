@@ -29,3 +29,9 @@ ameerA -- 2022-12-07 13:12
 Design doc further revised to clarify our database separations, as well as added an API that will be used,
 potentially overriding the exchangerate api, to be tested soon. 
 ==============================================================
+
+gordonM -- 2022-12-07 19:36
+--------------------------------------------------------------
+Updated the readme to contain the deliverables. The app now lives. Made login, register, play, leaderboard, profile templates.
+A login and register page now displays, but doesn't actually function until we have database. 
+==============================================================

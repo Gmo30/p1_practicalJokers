@@ -13,5 +13,5 @@ Run the following commands.
 2. `cd ~/p1_practicalJokers`  
 3. `pip install -r requirements.txt`  
 4. `python3 app/__init__.py`  
-5. Click on the url that states "localhost:5000" in the shell terminal.
+5. Click on the url that states "http://127.0.0.1:5000" in the shell terminal.
 

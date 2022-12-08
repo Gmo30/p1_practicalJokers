@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <title> REGISTER PAGE </title>
+  </head>
+
+  <body>
+    <h3>
+      Register
+    </h3>
+      <form action="/register" method="POST">
+      <input type="text" name="username" placeholder="username">
+      <input type="text" name="password" placeholder="password">
+      <input type="text" name="Password_confirm" placeholder="Confirm Password">
+      <input type="submit" name="sub1">
+      </form>
+      <p>{{response}}</p>
+      <div class="login">
+        <p>
+          Have an account?
+        </p>
+        <form action="/" method="GET">
+          <button>Login</button>
+        </form>
+      </div>
+    
+  </body>
+</html>
