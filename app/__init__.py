@@ -10,6 +10,12 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def disp_loginpage():
+    if(request.method == "POST"):
+        username = request.form['username']
+        password = request.form['password']
+        print(username)
+        print(password)
+        return render_template( 'play.html' )#this page displays play page
     if(request.method == "GET"):
         return render_template( 'login.html' ) #displays the login page
 
