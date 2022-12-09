@@ -24,8 +24,8 @@ def user_exists(username):
     result=c.execute("Select user from consoomer where username = ?", username)
     try:
         c.fetchone()[0]==username
-        c.close
+        c.close()
         return True
     except: #If c.fetchone does not have an entry, then we want to catch the error and return an exception
-        c.close
+        c.close()
         return False
