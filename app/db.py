@@ -17,8 +17,9 @@ db.execute("CREATE TABLE if not exists country(country text, GDP real)")
 
 db.execute("Insert into country(USA,0)")
 
-db.execute("Insert into consoomer(?,?,?)", username, password, USA)
+db.execute("Insert into consoomer(?,?,?)", "Ameer", "Alnasser", "USA")
 
+db.execute()
 def user_exists(username):
     c=db.cursor()
     result=c.execute("Select user from consoomer where username = ?", username)
@@ -29,3 +30,7 @@ def user_exists(username):
     except: #If c.fetchone does not have an entry, then we want to catch the error and return an exception
         c.close()
         return False
+def insert(username,password, country):
+    c=db.cursor()
+    c.execute("Insert into consoomer(?,?,?)", username, password, country)
+ 
