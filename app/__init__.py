@@ -22,17 +22,20 @@ def register():
     if(request.method == "GET"):
         return render_template('register.html')  #displays register page
     else:
-        username = request.form['username'].lower()
-        password = request.form['password']
+        if (request.form['username']!= ''):
+            username = request.form['username'].lower()
+        if (request.form['password']!= ''):
+            password = request.form['password']
         password_confirm = request.form['password_confirm']
-        if(user_exists(username)):
-            return render_template('register.html', message = "User already exists")
-        else:
+      #  if(user_exists(username)):
+        return render_template('register.html', message = "User already exists")
+        #else:
             #if(password == password_confirm):
-            return redirect(url_for('login')) #when you register, redirects you to login
+           # return redirect(url_for('login')) #when you register, redirects you to login
 
-#@app.route("/play")
-#def play():
+@app.route("/play")
+def play():
+            return render_template('play.html')  
 
 
 if __name__ == "__main__":  # true if this file NOT imported
