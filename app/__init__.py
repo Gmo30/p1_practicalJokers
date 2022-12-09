@@ -6,6 +6,7 @@ time spent: 3 hours
 """
 
 from flask import Flask, render_template, request, redirect, url_for
+import db
 app = Flask(__name__) 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -26,10 +27,10 @@ def register():
         password = request.form['password']
         password_confirm = request.form['password_confirm']
         if(user_exists(username)):
-        return render_template('register.html', message = "User already exists")
+            return render_template('register.html', message = "User already exists")
         else:
             if(password == password_confirm):
-            return redirect(url_for('login')) #when you register, redirects you to login
+                return redirect(url_for('login')) #when you register, redirects you to login
             else:
                 return render_template('register.html', message = "Passwords don't match")
 

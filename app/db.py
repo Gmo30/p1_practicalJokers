@@ -15,9 +15,9 @@ db.execute("CREATE TABLE if not exists dabloons(user text, highest real, current
 
 db.execute("CREATE TABLE if not exists country(country text, GDP int)")
 
-db.execute("Insert into country('USA',0)")
+db.execute("Insert into country values('USA',0)")
 
-db.execute("Insert into consoomer(?,?,?)", "Ameer", "Alnasser", "USA")
+db.execute("Insert into consoomer values(?,?,?)", "Ameer", "Alnasser", "USA")
 
 db.execute()
 def user_exists(username):
