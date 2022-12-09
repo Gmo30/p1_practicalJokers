@@ -13,7 +13,7 @@ db.execute("CREATE TABLE if not exists consoomer(user text, password text, count
 
 db.execute("CREATE TABLE if not exists dabloons(user text, highest real, current real, recent real)")
 
-db.execute("CREATE TABLE if not exists country(country text, GDP real)")
+db.execute("CREATE TABLE if not exists country(country text, GDP int)")
 
 db.execute("Insert into country('USA',0)")
 
