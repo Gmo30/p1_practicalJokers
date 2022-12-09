@@ -6,7 +6,7 @@ time spent: 3 hours
 """
 
 from flask import Flask, render_template, request, redirect, url_for
-import db
+from db import *
 app = Flask(__name__) 
 
 @app.route("/", methods=['GET', 'POST'])
