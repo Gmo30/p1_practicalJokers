@@ -2,7 +2,7 @@
 Practical Jokers
 Softdev P01
 2022-12-07
-time spent: 3 hours
+time spent: 5 hours
 """
 
 from flask import Flask, render_template, request, redirect, url_for
@@ -10,25 +10,34 @@ from db import *
 app = Flask(__name__) 
 
 @app.route("/", methods=['GET', 'POST'])
-def disp_loginpage():
+def login():
     if(request.method == "GET"):
         return render_template( 'login.html' ) #displays the login page
     if(request.method == "POST"):
         username = request.form['username']
         password = request.form['password']
-        return redirect(url_for('play'))#this page displays play page
+        if(user_exists(username)):
+            #needs password_match function
+            return redirect(url_for('play'))#this page displays play page
+        else:
+            return render_template('login.html', message = "User doesn't exist")
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if(request.method == "GET"):
         return render_template('register.html')  #displays register page
     else:
-        username = request.form['username'].lower()
+        username = request.form['username']
         password = request.form['password']
         password_confirm = request.form['password_confirm']
+        if(len(username) == 0):
+                return render_template('register.html', message = "User is too short")
         if(user_exists(username)):
+            #print(username)
             return render_template('register.html', message = "User already exists")
         else:
+            if(len(password) == 0):
+                return render_template('register.html', message = "Please enter password")
             if(password == password_confirm):
                 return redirect(url_for('login')) #when you register, redirects you to login
             else:

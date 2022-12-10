@@ -41,7 +41,12 @@ ryanL -- 2022-12-07 22:08
 Created variables to hold username and password from login page with request form. Waiting for play.html to redirect to.
 ==============================================================
 
-gordonM ameerA-- 2022-12-07 19:36
+gordonM ameerA-- 2022-12-08 19:36
 --------------------------------------------------------------
 Created db.py and worked on login in stuff that uses db functions. 
+==============================================================
+
+gordonM -- 2022-12-09 22:11
+--------------------------------------------------------------
+Fixed issues with database. Hardcoded some users. Finalized register page. Now working on login stuff. 
 ==============================================================
