@@ -24,7 +24,7 @@ c.close()
 
 def user_exists(username):
     c=db.cursor()
-    result = c.execute("Select user from consoomer where user = ?", (username,))
+    result = c.execute("Select user from consoomer where user = ?", (username))
     try:
         c.fetchone()[0]==username
         c.close()
@@ -32,8 +32,26 @@ def user_exists(username):
     except: #If c.fetchone does not have an entry, then we want to catch the error and return an exception
         c.close()
         return False
-    
+
 def insert(username,password, country):
     c=db.cursor()
     c.execute("Insert into consoomer(?,?,?)", username, password, country)
- 
+    c.close()
+def check_pass(insert):
+        c=db.cursor()
+        result = c.execute("Select password from consoomer where user = ?", (username))
+        try:
+            c.fetchone()[0]== insert
+            c.close()
+            return True
+        except: #If c.fetchone does not have an entry, then we want to catch the error and return an exception
+            c.close()
+            return False
+
+def update_country(user_new,country_new):
+    c=db.cursor()
+    db.executescript("""
+    UPDATE consoomer
+    Set country = ?
+    where user=?""", country_new,user_new)
+    c.close()
