@@ -35,7 +35,7 @@ def user_exists(username):
 
 def insert(username,password, country):
     c=db.cursor()
-    c.execute("Insert into consoomer(?,?,?)", username, password, country)
+    c.execute("Insert into consoomer values(?,?,?)", username, password, country)
     c.close()
 def check_pass(insert):
         c=db.cursor()
