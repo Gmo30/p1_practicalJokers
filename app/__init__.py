@@ -2,11 +2,12 @@
 Practical Jokers
 Softdev P01
 2022-12-07
-time spent: 5 hours
+time spent: 6 hours
 """
 
 from flask import Flask, render_template, request, redirect, url_for
 from db import *
+from api import *
 app = Flask(__name__) 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -39,14 +40,22 @@ def register():
             if(len(password) == 0):
                 return render_template('register.html', message = "Please enter password")
             if(password == password_confirm):
+                #add_user function needed
                 return redirect(url_for('login')) #when you register, redirects you to login
             else:
                 return render_template('register.html', message = "Passwords don't match")
 
 @app.route("/play")
 def play():
-    return render_template('play.html')  
+    return render_template('play.html', message = joke())  
 
+@app.route("/leaderboard")
+def leaderboard():
+    return render_template('leaderboard.html')
+
+@app.route("/profile")
+def profile():
+    return render_template('profile.html')
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change

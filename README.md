@@ -15,3 +15,8 @@ Run the following commands.
 4. `python3 app/__init__.py`  
 5. Click on the url that states "http://127.0.0.1:5000" in the shell terminal.
 
+### APIs used:
+
+1. JokeAPI: https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_jokeapi.md
+2. DeckofCards: https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_deck_of_cards.md
+3. ExchangeRate: https://github.com/stuy-softdev/notes-and-code/blob/main/api_kb/411_on_currency_exchange.md 

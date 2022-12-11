@@ -50,3 +50,8 @@ gordonM -- 2022-12-09 22:11
 --------------------------------------------------------------
 Fixed issues with database. Hardcoded some users. Finalized register page. Now working on login stuff. 
 ==============================================================
+
+gordonM -- 2022-12-09 22:11
+--------------------------------------------------------------
+Started using bootstrap on the templates. Setup api.py, so far only have joke api ready. Made a working nav bar.
+==============================================================
