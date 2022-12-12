@@ -2,7 +2,7 @@
 Practical Jokers
 Softdev P01
 2022-12-07
-time spent: 6 hours
+time spent: 8 hours
 """
 
 from flask import Flask, render_template, request, redirect, url_for
@@ -17,9 +17,15 @@ def login():
     if(request.method == "POST"):
         username = request.form['username']
         password = request.form['password']
+        #print(password)
         if(user_exists(username)):
-            #needs password_match function
-            return redirect(url_for('play'))#this page displays play page
+            if(password != 0):
+                if(check_pass(username, password)):
+                    return redirect(url_for('play'))#this page displays play page
+                else:
+                    return render_template('login.html', message = "Password is incorrect")
+            else:
+                return render_template('login.html', message = "Fill in password field")
         else:
             return render_template('login.html', message = "User doesn't exist")
 

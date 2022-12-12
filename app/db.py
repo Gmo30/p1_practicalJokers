@@ -17,14 +17,14 @@ CREATE TABLE if not exists dabloons(user text, highest real, current real, recen
 CREATE TABLE if not exists country(country text, GDP int);
 """)
 c.close()
-# c = db.cursor()
-# c.execute("select * from consoomer")
-# print(c.fetchall())
-# c.close()
+#c = db.cursor()
+#c.execute("select * from consoomer")
+#print(c.fetchall())
+#c.close()
 
 def user_exists(username):
     c=db.cursor()
-    result = c.execute("Select user from consoomer where user = ?", (username))
+    c.execute("Select user from consoomer where user = ?", (username,))
     try:
         c.fetchone()[0]==username
         c.close()
@@ -37,16 +37,17 @@ def insert(username,password, country):
     c=db.cursor()
     c.execute("Insert into consoomer values(?,?,?)", username, password, country)
     c.close()
-def check_pass(insert):
-        c=db.cursor()
-        result = c.execute("Select password from consoomer where user = ?", (username))
-        try:
-            c.fetchone()[0]== insert
-            c.close()
-            return True
-        except: #If c.fetchone does not have an entry, then we want to catch the error and return an exception
-            c.close()
-            return False
+
+def check_pass(username, password):
+    c=db.cursor()
+    c.execute('select * from consoomer where (user = ? AND password = ?)', (str(username), str(password)))
+    try:
+        c.fetchone()[0]
+        c.close()
+        return True
+    except: 
+        c.close()
+        return False
 
 def update_country(user_new,country_new):
     c=db.cursor()
