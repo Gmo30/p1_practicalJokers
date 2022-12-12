@@ -60,3 +60,8 @@ gordonM -- 2022-12-11 21:50
 --------------------------------------------------------------
 Played around with bootstrap.
 ==============================================================
+
+gordonM ryanL-- 2022-12-12 14:05
+--------------------------------------------------------------
+Added deck of cards table in database. Updated value for deck of cards. NOT TESTED. Remove countries from user table.
+==============================================================
