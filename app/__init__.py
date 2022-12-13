@@ -53,7 +53,9 @@ def register():
 
 @app.route("/play")
 def play():
-    return render_template('play.html', message = joke())  
+    deckid = get_deck_id()
+    cardtuple = draw1(deckid)
+    return render_template('play.html', message = joke(), card1 = cardtuple[1])  
 
 @app.route("/leaderboard")
 def leaderboard():
