@@ -46,7 +46,7 @@ def register():
             if(len(password) == 0):
                 return render_template('register.html', message = "Please enter password")
             if(password == password_confirm):
-                #add_user function needed
+                add_user(username, password)
                 return redirect(url_for('login')) #when you register, redirects you to login
             else:
                 return render_template('register.html', message = "Passwords don't match")

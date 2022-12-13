@@ -34,9 +34,9 @@ def user_exists(username):
         c.close()
         return False
 
-def add_user(username, password, country):
+def add_user(username, password):
     c=db.cursor()
-    c.execute("Insert into consoomer values(?,?,?,?)", username, password, country, 1000)
+    c.execute("Insert into consoomer values(?,?,?)", (username, password, "1000"))
     c.close()
 
 def check_pass(username, password):
@@ -63,5 +63,13 @@ def update_money_win(username, money_bet):
     c.execute("select money from consoomer where user = ?", (username,))
     before_bet = c.fetchone()
     after_bet = before_bet[0] + money_bet
+    c.execute("UPDATE consoomer SET money = after_bet WHERE user =?", (username,))
+    c.close()
+
+def update_money_lose(username, money_bet):
+    c=db.cursor()
+    c.execute("select money from consoomer where user = ?", (username,))
+    before_bet = c.fetchone()
+    after_bet = before_bet[0] - money_bet
     c.execute("UPDATE consoomer SET money = after_bet WHERE user =?", (username,))
     c.close()
