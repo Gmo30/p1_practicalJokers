@@ -65,3 +65,8 @@ gordonM ryanL-- 2022-12-12 14:05
 --------------------------------------------------------------
 Added deck of cards table in database. Updated value for deck of cards. NOT TESTED. Remove countries from user table.
 ==============================================================
+
+ryanL-- 2022-12-13 01:05
+--------------------------------------------------------------
+Added deck of cards api functions to get deck id, draw 1 and 2 cards and reset deck.
+==============================================================
