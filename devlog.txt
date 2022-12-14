@@ -85,3 +85,8 @@ gordonM-- 2022-12-13 21:34
 --------------------------------------------------------------
 Set up the exchangeRate API. Made a country and currency function with api.py .
 ==============================================================
+
+gordonM ryanL ameerA-- 2022-12-13 21:34
+--------------------------------------------------------------
+Ryan did session stuff. Ameer and Gordon did api key directory stuff. Started on get_countries function.
+==============================================================

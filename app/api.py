@@ -5,6 +5,7 @@ Softdev P01
 """
 
 import requests
+import os
 
 list_of_countries = {"USA": "USD", "Canada":"CAD", "United Kingdom":"GBP"}
 
@@ -37,7 +38,8 @@ def draw2(deck_id):#draws once card from deck and returns tuple of both card val
 #     return
 
 def get_exchange(country1, country2, amt):
-    key = open("..\keys\\key_exchangeRate.txt").read()
+    wd = os.path.dirname(os.path.realpath("key_exchangeRate.txt"))
+    key = open(wd + "/keys/key_exchangeRate.txt").read()
     currency1 = get_currency(country1)
     currency2 = get_currency(country2)
     url = "https://v6.exchangerate-api.com/v6/" + key + "/pair/" + currency1 +"/"+ currency2 +"/" + str(amt)
@@ -50,8 +52,16 @@ def get_exchange(country1, country2, amt):
 def get_currency(country):
     return(list_of_countries[country])
 
-print(get_currency("Canada"))
-print(get_exchange("USA", "Canada", 100))
+def get_countries():
+    all_countries = []
+    for key in list_of_countries:
+        all_countries.append(key)
+    return all_countries
+
+
+print(get_countries())
+#print(get_currency("Canada"))
+#print(get_exchange("USA", "Canada", 100))
 
 #deckid = get_deck_id()
 #print(deckid)
