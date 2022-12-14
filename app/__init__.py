@@ -5,10 +5,11 @@ Softdev P01
 time spent: 8 hours
 """
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from db import *
 from api import *
 app = Flask(__name__) 
+app.secret_key = b'foo'
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
@@ -17,10 +18,11 @@ def login():
     if(request.method == "POST"):
         username = request.form['username']
         password = request.form['password']
-        #print(password)
         if(user_exists(username)):
             if(password != 0):
                 if(check_pass(username, password)):
+                    session['username'] = request.form['username']
+                    #print("\nCookie stuff: " + str(session)+ "\n")
                     return redirect(url_for('play'))#this page displays play page
                 else:
                     return render_template('login.html', message = "Password is incorrect")
@@ -50,6 +52,13 @@ def register():
                 return redirect(url_for('login')) #when you register, redirects you to login
             else:
                 return render_template('register.html', message = "Passwords don't match")
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    print("\nPopped the cookie\n")
+    login_status = False
+    return redirect(url_for('login'))
 
 @app.route("/play")
 def play():
