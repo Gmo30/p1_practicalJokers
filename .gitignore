@@ -127,5 +127,5 @@ ehthumbs.db
 **/*[\\/\:;*?!'"<>|$º•¶§∞¢£]*
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-\app\keys\key_exchangeRate.txt 
+/app/keys/key_exchangeRate.txt 
 
