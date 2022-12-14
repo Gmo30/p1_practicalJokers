@@ -37,7 +37,7 @@ def draw2(deck_id):#draws once card from deck and returns tuple of both card val
 #     return
 
 def get_exchange(country1, country2, amt):
-    key = open("keys\\key_exchangeRate.txt").read()
+    key = open("..\keys\\key_exchangeRate.txt").read()
     currency1 = get_currency(country1)
     currency2 = get_currency(country2)
     url = "https://v6.exchangerate-api.com/v6/" + key + "/pair/" + currency1 +"/"+ currency2 +"/" + str(amt)
