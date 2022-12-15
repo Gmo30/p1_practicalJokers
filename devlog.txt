@@ -90,3 +90,8 @@ gordonM ryanL ameerA-- 2022-12-13 21:34
 --------------------------------------------------------------
 Ryan did session stuff. Ameer and Gordon did api key directory stuff. Started on get_countries function.
 ==============================================================
+
+ryanL-- 2022-12-14 13:58
+--------------------------------------------------------------
+Did sessions stuff and added logout button for play, leaderboard, and profile
+==============================================================

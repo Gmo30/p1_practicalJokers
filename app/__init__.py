@@ -62,16 +62,22 @@ def logout():
 
 @app.route("/play")
 def play():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     deckid = get_deck_id()
     cardtuple = draw1(deckid)
     return render_template('play.html', message = joke(), card1 = cardtuple[1])  
 
 @app.route("/leaderboard")
 def leaderboard():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     return render_template('leaderboard.html')
 
 @app.route("/profile")
 def profile():
+    if 'username' not in session:
+        return redirect(url_for('login'))
     return render_template('profile.html')
 
 if __name__ == "__main__":  # true if this file NOT imported
