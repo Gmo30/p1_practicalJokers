@@ -15,7 +15,8 @@ db.executescript("""
 CREATE TABLE if not exists consoomer(user text, password text, country text, money int);
 CREATE TABLE if not exists dabloons(user text, country text, highest real, current real, recent real);
 CREATE TABLE if not exists country(country text, GDP int);
-CREATE TABLE if not exists cards(deck_id text, total_value int)
+CREATE TABLE if not exists cards(deck_id text, total_value int);
+Insert into consoomer values(?,?,?,?)", ("aa", "password", "USA", "1000");
 """)
 c.close()
 #c = db.cursor()
