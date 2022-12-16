@@ -33,45 +33,19 @@
         <p class="text-danger">{{message}}</p>
 
         <div class="container text-center">    
-          <div class="row">
-            <div class="col-sm-1">
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1"> 
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1">
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1"> 
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1">
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1"> 
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1">
-              <img src= {{card1}} class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1"> 
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1">
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1"> 
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1">
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
-            <div class="col-sm-1"> 
-              <img src="" class="card" style="width:100%" alt="Image">
-            </div>
+          <div class="dealer_row">
+            {% for card in card_list %}
+              {% if card != "null" %}
+                <div class="col-md-1" style = "display: flex;">
+                  <img src={{card}} class="card" style="width:100%" alt="Image">
+                </div>
+              {% else %}
+                <div class="col-md-1" style = "display: flex;">
+                  <p> place holder </p>
+                </div>
+              {% endif %}
+            {% endfor %}
           </div>
         </div>
     </body>
 </html>
-    
