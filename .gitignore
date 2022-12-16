@@ -128,4 +128,5 @@ ehthumbs.db
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 /app/keys/key_exchangeRate.txt 
-
+/app/back.db
+/app/__pycache__/
