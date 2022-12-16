@@ -36,7 +36,7 @@ def user_exists(username):
 
 def add_user(username, password, country):
     c=db.cursor()
-    c.execute("Insert into consoomer values(?,?,?)", (username, password, country, "1000"))
+    c.execute("Insert into consoomer values(?,?,?,?)", (username, password, country, "1000"))
     c.close()
 
 def check_pass(username, password):

@@ -18,6 +18,7 @@ def login():
     if(request.method == "POST"):
         username = request.form['username']
         password = request.form['password']
+
         if(user_exists(username)):
             if(password != 0):
                 if(check_pass(username, password)):
@@ -39,6 +40,8 @@ def register():
         username = request.form['username']
         password = request.form['password']
         password_confirm = request.form['password_confirm']
+        country = request.form['country']
+        print(country)
         if(len(username) == 0):
                 return render_template('register.html', message = "User is too short")
         if(user_exists(username)):
@@ -48,7 +51,7 @@ def register():
             if(len(password) == 0):
                 return render_template('register.html', message = "Please enter password")
             if(password == password_confirm):
-                add_user(username, password)
+                add_user(username, password, country)
                 return redirect(url_for('login')) #when you register, redirects you to login
             else:
                 return render_template('register.html', message = "Passwords don't match")
