@@ -95,3 +95,8 @@ ryanL-- 2022-12-14 13:58
 --------------------------------------------------------------
 Did sessions stuff and added logout button for play, leaderboard, and profile
 ==============================================================
+
+gordonM ryanL ameerA-- 2022-12-13 21:34
+--------------------------------------------------------------
+Ameer fixed pycache. Ryan worked on displaying the cards. Gordon worked on the profile html page. 
+==============================================================
