@@ -59,7 +59,7 @@ def get_countries():
     return all_countries
 
 
-print(get_countries())
+#print(get_countries())
 #print(get_currency("Canada"))
 #print(get_exchange("USA", "Canada", 100))
 
