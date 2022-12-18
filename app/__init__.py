@@ -68,8 +68,8 @@ def play():
     if 'username' not in session:
         return redirect(url_for('login'))
     deckid = get_deck_id()
-    cardlist = ["null","null","null","null","null",cardtuple[1],"null","null","null","null","null","null",]
-    return render_template('play.html', message = joke(), card_list = cardlist)  
+    #cardlist = ["null","null","null","null","null",cardtuple[1],"null","null","null","null","null","null",]
+    return render_template('play.html', message = joke())#, card_list = cardlist)  
 
 @app.route("/leaderboard")
 def leaderboard():
@@ -81,7 +81,11 @@ def leaderboard():
 def profile():
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template('profile.html')
+
+    if(request.method == "POST"): 
+        country = request.form["country"]
+
+    return render_template('profile.html', username = session['username'])
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change

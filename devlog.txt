@@ -96,7 +96,13 @@ ryanL-- 2022-12-14 13:58
 Did sessions stuff and added logout button for play, leaderboard, and profile
 ==============================================================
 
-gordonM ryanL ameerA-- 2022-12-13 21:34
+gordonM ryanL ameerA-- 2022-12-16 21:34
 --------------------------------------------------------------
 Ameer fixed pycache. Ryan worked on displaying the cards. Gordon worked on the profile html page. 
+==============================================================
+
+gordonM-- 2022-12-17 21:34
+--------------------------------------------------------------
+Worked on profile html page, now displays switch country. Doesn't work tho. requires country function and 
+post if statement in __init__.py. 
 ==============================================================
