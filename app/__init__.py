@@ -85,6 +85,8 @@ def profile():
 
     if(request.method == "POST"): 
         country = request.form["country"]
+        update_country(session['username'], country)
+        return render_template('profile.html', username = session['username'], message = "Updated country")
 
     return render_template('profile.html', username = session['username'])
 
