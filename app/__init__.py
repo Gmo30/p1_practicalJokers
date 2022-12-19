@@ -78,11 +78,10 @@ def leaderboard():
         return redirect(url_for('login'))
     return render_template('leaderboard.html')
 
-@app.route("/profile")
+@app.route("/profile", methods=['GET', 'POST'])
 def profile():
     if 'username' not in session:
         return redirect(url_for('login'))
-
     if(request.method == "POST"): 
         country = request.form["country"]
         update_country(session['username'], country)
