@@ -111,3 +111,8 @@ ryanL-- 2022-12-18 23:13
 --------------------------------------------------------------
 Displaying play correctly with bootstrap.
 ==============================================================
+
+ameerA ryanL gordonM-- 2022-12-19 14:05
+--------------------------------------------------------------
+Worked on play, getting hit and stand ready. More db work with decks, and profile page + update country + CSS
+==============================================================
