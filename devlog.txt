@@ -106,3 +106,8 @@ gordonM-- 2022-12-17 21:34
 Worked on profile html page, now displays switch country. Doesn't work tho. requires country function and 
 post if statement in __init__.py. 
 ==============================================================
+
+ryanL-- 2022-12-18 23:13
+--------------------------------------------------------------
+Displaying play correctly with bootstrap.
+==============================================================

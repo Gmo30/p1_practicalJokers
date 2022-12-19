@@ -68,8 +68,9 @@ def play():
     if 'username' not in session:
         return redirect(url_for('login'))
     deckid = get_deck_id()
-    #cardlist = ["null","null","null","null","null",cardtuple[1],"null","null","null","null","null","null",]
-    return render_template('play.html', message = joke())#, card_list = cardlist)  
+    cardtuple = draw1(deckid)
+    cardlist = ["null","null","null","null","null",cardtuple[1],"null","null","null","null","null","null",]#temporary list to test
+    return render_template('play.html', message = joke(), card_list = cardlist)  
 
 @app.route("/leaderboard")
 def leaderboard():
