@@ -64,7 +64,7 @@ def check_pass(username, password):
 
 def update_country(user_new,country_new):
     c=db.cursor()
-    db.execute("UPDATE consoomer Set country = ? where user=?", country_new,user_new)
+    db.execute("UPDATE consoomer Set country = ? where user=?", (str(country_new), str(user_new)))
     c.close()
 
 def update_money_win(username, money_bet):
