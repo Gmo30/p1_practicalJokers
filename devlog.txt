@@ -122,3 +122,8 @@ ryanL-- 2022-12-20 00:11
 Converted face card values into integer values in api.py. Added multiple functions to db.py for player and dealer.
 Updated play.html to have different cards for dealer and player. Refreshing does not change cards.
 ==============================================================
+
+ameerA ryanL gordonM-- 2022-12-120 14:03
+--------------------------------------------------------------
+Bug testing, discovered a JSON error... will solve soon. Fixed change db function. Worked on leaderboard. 
+==============================================================
