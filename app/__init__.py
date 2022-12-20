@@ -67,32 +67,24 @@ def logout():
     login_status = False
     return redirect(url_for('login'))
 
-@app.route("/play")
+@app.route("/play", methods=['GET', 'POST'])
 def play():
     if 'username' not in session:
         return redirect(url_for('login'))
-        
-    else:
-        pcardlist = player_hand()
-        if pcardlist[0] == "None":
-            deckid = get_deck_id()
-            cardtuple = draw2(deckid)
-            add_player_card(cardtuple[0], cardtuple[1])
-            add_player_card(cardtuple[2], cardtuple[3])
-            pcardlist = player_hand()
-        pcardlist = display_card_list(pcardlist)
-        print(pcardlist)
-
-        dcardlist = dealer_hand()
-        if dcardlist[0] == "None":
-            deckid = get_deck_id()
-            cardtuple = draw2(deckid)
-            add_dealer_card(cardtuple[0], cardtuple[1])
-            add_dealer_card(cardtuple[2], cardtuple[3])
-            dcardlist = dealer_hand()
-        dcardlist = display_card_list(dcardlist)
+    #print(request.form['hit'])
+    game_started = False
+    if(request.method == "GET"):
+        deckid= get_deck_id()
+        bothhands = get_both_hands(deckid)
+        pcardlist = bothhands[0]
+        dcardlist = bothhands[1]
         #message = joke()
-    return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
+    if(game_started):
+        return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
+    elif(not game_started):
+        card_list = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
+        card_list2 = card_list
+        return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
 
 @app.route("/leaderboard")
 def leaderboard():

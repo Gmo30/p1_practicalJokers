@@ -6,6 +6,7 @@ Softdev P01
 
 import requests
 import os
+from db import *
 
 list_of_countries = {"USA": "USD", "Canada":"CAD", "United Kingdom":"GBP"}
 
@@ -85,6 +86,25 @@ def get_countries():
     for key in list_of_countries:
         all_countries.append(key)
     return all_countries
+
+def get_both_hands(deckid):
+    pcardlist = player_hand()
+    if pcardlist[0] == "None":
+        cardtuple = draw2(deckid)
+        add_player_card(cardtuple[0], cardtuple[1])
+        add_player_card(cardtuple[2], cardtuple[3])
+        pcardlist = player_hand()
+    pcardlist = display_card_list(pcardlist)
+
+    dcardlist = dealer_hand()
+    if dcardlist[0] == "None":
+        cardtuple = draw2(deckid)
+        add_dealer_card(cardtuple[0], cardtuple[1])
+        add_dealer_card(cardtuple[2], cardtuple[3])
+        dcardlist = dealer_hand()
+    dcardlist = display_card_list(dcardlist)
+
+    return pcardlist, dcardlist
 
 
 #print(get_countries())
