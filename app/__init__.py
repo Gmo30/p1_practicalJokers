@@ -13,6 +13,8 @@ app.secret_key = b'foo'
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
+    if 'username' in session:
+        return redirect(url_for('play'))
     if(request.method == "GET"):
         return render_template( 'login.html' ) #displays the login page
     if(request.method == "POST"):
@@ -34,6 +36,8 @@ def login():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    if 'username' in session:
+        return redirect(url_for('play'))
     if(request.method == "GET"):
         return render_template('register.html')  #displays register page
     else:
