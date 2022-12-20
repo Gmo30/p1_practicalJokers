@@ -71,17 +71,21 @@ def logout():
 def play():
     if 'username' not in session:
         return redirect(url_for('login'))
-    #print(request.form['hit'])
-    game_started = False
+    if(request.method == "POST" and GAME_STARTED): 
+        #should only allow u to hit if u started the game
+        hit = request.form['hit']
+        print(hit)
+        return render_template('play.html')
+    GAME_STARTED = False
     if(request.method == "GET"):
         deckid= get_deck_id()
         bothhands = get_both_hands(deckid)
         pcardlist = bothhands[0]
         dcardlist = bothhands[1]
         #message = joke()
-    if(game_started):
+    if(GAME_STARTED):
         return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
-    elif(not game_started):
+    elif(not GAME_STARTED):
         card_list = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
         card_list2 = card_list
         return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
