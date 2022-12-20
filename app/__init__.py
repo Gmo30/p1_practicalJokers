@@ -67,10 +67,25 @@ def logout():
 def play():
     if 'username' not in session:
         return redirect(url_for('login'))
-    deckid = get_deck_id()
-    cardtuple = draw1(deckid)
-    cardlist = ["null","null","null","null","null",cardtuple[1],"null","null","null","null","null","null",]#temporary list to test
-    return render_template('play.html', message = joke(), card_list = cardlist)  
+    pcardlist = player_hand()
+    if pcardlist[0] == "None":
+        deckid = get_deck_id()
+        cardtuple = draw2(deckid)
+        add_player_card(cardtuple[0], cardtuple[1])
+        add_player_card(cardtuple[2], cardtuple[3])
+        pcardlist = player_hand()
+    pcardlist = display_card_list(pcardlist)
+    print(pcardlist)
+
+    dcardlist = dealer_hand()
+    if dcardlist[0] == "None":
+        deckid = get_deck_id()
+        cardtuple = draw2(deckid)
+        add_dealer_card(cardtuple[0], cardtuple[1])
+        add_dealer_card(cardtuple[2], cardtuple[3])
+        dcardlist = dealer_hand()
+    dcardlist = display_card_list(dcardlist)
+    return render_template('play.html', message = joke(), card_list = pcardlist, card_list2 = dcardlist)  
 
 @app.route("/leaderboard")
 def leaderboard():

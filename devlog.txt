@@ -116,3 +116,9 @@ ameerA ryanL gordonM-- 2022-12-19 14:05
 --------------------------------------------------------------
 Worked on play, getting hit and stand ready. More db work with decks, and profile page + update country + CSS
 ==============================================================
+
+ryanL-- 2022-12-20 00:11
+--------------------------------------------------------------
+Converted face card values into integer values in api.py. Added multiple functions to db.py for player and dealer.
+Updated play.html to have different cards for dealer and player. Refreshing does not change cards.
+==============================================================

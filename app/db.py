@@ -21,8 +21,8 @@ CREATE TABLE if not exists dealercards(cardname text, cardname1 text, cardname2 
 CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 text,cardname3 text, 
     cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
-Insert into dealercard values('None','None','None','None','None','None','None','None','None','None','None','None',0);
-Insert into playercard values('None','None','None','None','None','None','None','None','None','None','None','None',0);
+Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
+Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into consoomer values(?,?,?,?), ('aa', 'password', 'USA', '1000');
 """)
 c.close()
@@ -83,26 +83,99 @@ def update_money_lose(username, money_bet):
     c.execute("UPDATE consoomer SET money = after_bet WHERE user =?", (username,))
     c.close()
 
-def add_player_card(card):
+def add_player_card(value, card):
     c=db.cursor()
-    c.execute()
-    c.close()
-def add_dealer(card):
-    c=db.cursor()
-    c.execute()
+    #updates card
+    c.execute("SELECT * FROM playercards")
+    rows = c.fetchall()
+    lst = []
+    added = False
+    for i in range(len(rows[0])):
+        if(rows[0][i] == 'None' and added == False):
+            lst.append(card)
+            added = True
+        elif(rows[0][i] != 'None' or added == True):
+            lst.append(rows[0][i])
+    totalvalue = int(lst[12])
+    reset_playercards()
+    c.execute("UPDATE playercards SET cardname = ?, cardname1 = ?, cardname2 = ?,cardname3 = ?, cardname4 = ?, cardname5 = ?, cardname6 = ?, cardname7 = ?, cardname8 = ?, cardname9 = ?, cardname10 = ?, cardname11 = ?,  total_value = ?", (lst[0],lst[1],lst[2],lst[3],lst[4],lst[5],lst[6],lst[7],lst[8],lst[9],lst[10],lst[11],lst[12]))
+    #updates value
+    totalvalue += int(value)
+    c.execute("UPDATE playercards SET total_value = ?", (totalvalue,))
     c.close()
 
-def reset_cards():
+def add_dealer_card(value, card):
     c=db.cursor()
-    c.executescript("""
-    CREATE TABLE 
-    dealercards(cardname text, cardname1 text, cardname2 text,cardname3 text, 
-    cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
-    cardname9 text, cardname10 text, cardname11 text,  total_value int);
-    CREATE TABLE
-     playercards(cardname text, cardname1 text, cardname2 text,cardname3 text, 
-    cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
-    cardname9 text, cardname10 text, cardname11 text,  total_value int);
-    Insert into dealercard values('None','None','None','None','None','None','None','None','None','None','None','None',0);
-    Insert into playercard values('None','None','None','None','None','None','None','None','None','None','None','None',0);
-    """)
+    #updates card
+    c.execute("SELECT * FROM dealercards")
+    rows = c.fetchall()
+    lst = []
+    added = False
+    for i in range(len(rows[0])):
+        if(rows[0][i] == 'None' and added == False):
+            lst.append(card)
+            added = True
+        elif(rows[0][i] != 'None' or added == True):
+            lst.append(rows[0][i])
+    totalvalue = int(lst[12])
+    reset_playercards()
+    c.execute("UPDATE dealercards SET cardname = ?, cardname1 = ?, cardname2 = ?,cardname3 = ?, cardname4 = ?, cardname5 = ?, cardname6 = ?, cardname7 = ?, cardname8 = ?, cardname9 = ?, cardname10 = ?, cardname11 = ?,  total_value = ?", (lst[0],lst[1],lst[2],lst[3],lst[4],lst[5],lst[6],lst[7],lst[8],lst[9],lst[10],lst[11],lst[12]))
+    #updates value
+    totalvalue += int(value)
+    c.execute("UPDATE dealercards SET total_value = ?", (totalvalue,))
+    c.close()
+
+def reset_playercards():
+    c=db.cursor()
+    c.execute("DROP TABLE IF EXISTS playercards;")
+    c.execute("CREATE TABLE playercards(cardname text, cardname1 text, cardname2 text,cardname3 text, cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text, cardname9 text, cardname10 text, cardname11 text,  total_value int);")
+    c.execute("Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);")
+    c.close()
+
+def reset_dealercards():
+    c=db.cursor()
+    c.execute("DROP TABLE IF EXISTS dealercards;")
+    c.execute("CREATE TABLE dealercards(cardname text, cardname1 text, cardname2 text,cardname3 text, cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text, cardname9 text, cardname10 text, cardname11 text,  total_value int);")
+    c.execute("Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);")
+    c.close()
+
+def player_hand():
+    c=db.cursor()
+    c.execute("SELECT * FROM playercards")
+    rows = c.fetchall()
+    lst = []
+    for item in rows[0]:
+        lst.append(item)
+    lst.pop()
+    c.close()
+    return lst
+
+def dealer_hand():
+    c=db.cursor()
+    c.execute("SELECT * FROM dealercards")
+    rows = c.fetchall()
+    lst = []
+    for item in rows[0]:
+        lst.append(item)
+    lst.pop()
+    c.close()
+    return lst
+
+def display_card_list(hand):
+    index_of_none = 0
+    for i in range(len(hand)):
+        if hand[i] == "None":
+            index_of_none = i
+            break
+
+    return_hand = []
+    for x in range(6 - (int)(index_of_none / 2)):
+        return_hand.append("None")
+
+    for j in range(index_of_none):
+        return_hand.append(hand[j])
+
+    for k in range(12):
+        return_hand.append("None")
+        
+    return return_hand

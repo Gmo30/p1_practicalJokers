@@ -24,13 +24,41 @@ def draw1(deck_id):#draws once card from deck and returns tuple of value and ima
     url = "https://deckofcardsapi.com/api/deck/" + deck_id + "/draw/"
     req = requests.get(url, params={"count": 1})
     dictionary = req.json()
-    return dictionary["cards"][0]["value"], dictionary["cards"][0]["images"]["png"]
+    value = dictionary["cards"][0]["value"]
+    if value == "JACK":
+        value = "11"
+    elif value == "QUEEN":
+        value = "12"
+    elif value == "KING":
+        value = "13"
+    elif value == "ACE":
+        value = "1"
+    return value, dictionary["cards"][0]["images"]["png"]
 
 def draw2(deck_id):#draws once card from deck and returns tuple of both card value and image all strings. Will be called to create first hand.
     url = "https://deckofcardsapi.com/api/deck/" + deck_id + "/draw/"
     req = requests.get(url, params={"count": 2})
     dictionary = req.json()
-    return dictionary["cards"][0]["value"], dictionary["cards"][0]["images"]["png"],dictionary["cards"][1]["value"], dictionary["cards"][1]["images"]["png"]
+    value1 = dictionary["cards"][0]["value"]
+    if value1 == "JACK":
+        value1 = "11"
+    elif value1 == "QUEEN":
+        value1 = "12"
+    elif value1 == "KING":
+        value1 = "13"
+    elif value1 == "ACE":
+        value1 = "1"
+
+    value2 = dictionary["cards"][1]["value"]
+    if value2 == "JACK":
+        value2 = "11"
+    elif value2 == "QUEEN":
+        value2 = "12"
+    elif value2 == "KING":
+        value2 = "13"
+    elif value2 == "ACE":
+        value2 = "1"
+    return value1, dictionary["cards"][0]["images"]["png"],value2, dictionary["cards"][1]["images"]["png"]
 
 # def reset(deck_id):#start a new round of blackjack
 #     url = "https://deckofcardsapi.com/api/deck/" + deck_id + "/shuffle/"
