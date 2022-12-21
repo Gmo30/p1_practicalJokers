@@ -180,7 +180,7 @@ def display_card_list(hand):
         
     return return_hand
 
-def get_value():
+def get_player_value():
     c=db.cursor()
     c.execute("SELECT total_value FROM playercards")
     #print(c.fetchone[0])
@@ -188,3 +188,14 @@ def get_value():
     c.close()
     return value
 
+def get_dealer_value():
+    c=db.cursor()
+    c.execute("SELECT total_value FROM dealercards")
+    #print(c.fetchone[0])
+    value = c.fetchone()[0]
+    c.close()
+    return value
+
+def new_game():
+    reset_dealercards()
+    reset_dealercards()

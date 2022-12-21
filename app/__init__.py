@@ -76,13 +76,12 @@ def play():
         return redirect(url_for('login'))
     else: #in session
         if(request.method == "GET"):
-                #print("hello")
-                reset_dealercards()
-                reset_playercards()
-                GAME_STARTED = not GAME_STARTED
+            new_game()
+            pcardlist = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
+            dcardlist = pcardlist
+            GAME_STARTED= True
         if(GAME_STARTED):
-            #print("bye")
-            deckid= get_deck_id()
+            deckid = get_deck_id()
             bothhands = get_both_hands(deckid)
             pcardlist = bothhands[0]
             dcardlist = bothhands[1]
@@ -90,11 +89,21 @@ def play():
             if(move == "hit"):
                 new_card = draw1(deckid)
                 add_player_card(new_card[0], new_card[1])
-                if((get_value()) > 21):
+                if((get_player_value()) > 21):
                     GAME_STARTED = False
                     return render_template('play.html', message = "You Lose", card_list = pcardlist, card_list2 = dcardlist)
                 return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
-            #else:
+            if(move == "stand"): #stand
+                if(get_dealer_value() <= 17):
+                    new_card = draw1(deckid)
+                    add_dealer_card(new_card[0], new_card[1])
+                    return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
+                if(get_player_value() > get_dealer_value()):
+                    GAME_STARTED = False
+                    return render_template('play.html', message = "You Win", card_list = pcardlist, card_list2 = dcardlist)
+                if(get_player_value() == get_dealer_value()):
+                    GAME_STARTED = False
+                    return render_template('play.html', message = "You Tied", card_list = pcardlist, card_list2 = dcardlist)
             return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
         else: #Game not started 
             pcardlist = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
