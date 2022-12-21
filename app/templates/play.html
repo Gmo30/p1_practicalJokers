@@ -31,9 +31,6 @@
     </nav>
 
     <br>
-    <br>
-    <br>
-
     <form action = "/play" class ="row justify-content-center text-center" method = "GET">
       <div class="col"> 
         <button type="submit" name="New Game" class="btn btn-outline-light">New Game</button> 
@@ -164,7 +161,7 @@
         <br>
         <br>
         <br>
-        <br>
+        <h2 class="text-center">{{message}}</h2>
         <br>
         <br>
         <br>
@@ -173,12 +170,11 @@
         
         <form action = "/play" class ="row justify-content-center text-center" method = "POST">
           <div class="col"> 
-            <button type="submit" name="hit" value = "hit" class="btn btn-outline-light">hit</button> 
+            <button type="submit" name="move" value = "hit" class="btn btn-outline-light">HIT</button> 
           </div>
-          <!-- <div class="col"> 
-            <button type="submit" name="stand" value = "stand" class="btn btn-outline-light">STAND</button> 
+          <div class="col"> 
+            <button type="submit" name="move" value = "stand" class="btn btn-outline-light">STAND</button> 
           </div>
-        -->
         </form>
 
         <div class="container">    

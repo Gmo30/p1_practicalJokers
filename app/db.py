@@ -179,3 +179,12 @@ def display_card_list(hand):
         return_hand.append("None")
         
     return return_hand
+
+def get_value():
+    c=db.cursor()
+    c.execute("SELECT total_value FROM playercards")
+    #print(c.fetchone[0])
+    value = c.fetchone()[0]
+    c.close()
+    return value
+

@@ -10,6 +10,7 @@ from db import *
 from api import *
 app = Flask(__name__) 
 app.secret_key = b'foo'
+GAME_STARTED = False
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
@@ -68,27 +69,59 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route("/play", methods=['GET', 'POST'])
-def play():
+def play():  
+    global GAME_STARTED
+    if 'username' not in session:
+        GAME_STARTED = False #not sure if necessary
+        return redirect(url_for('login'))
+    else: #in session
+        if(request.method == "GET"):
+                #print("hello")
+                reset_dealercards()
+                reset_playercards()
+                GAME_STARTED = not GAME_STARTED
+        if(GAME_STARTED):
+            #print("bye")
+            deckid= get_deck_id()
+            bothhands = get_both_hands(deckid)
+            pcardlist = bothhands[0]
+            dcardlist = bothhands[1]
+            move = str(request.form.get('move'))
+            if(move == "hit"):
+                new_card = draw1(deckid)
+                add_player_card(new_card[0], new_card[1])
+                if((get_value()) > 21):
+                    GAME_STARTED = False
+                    return render_template('play.html', message = "You Lose", card_list = pcardlist, card_list2 = dcardlist)
+                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
+            #else:
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
+        else: #Game not started 
+            pcardlist = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
+            dcardlist = pcardlist
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
+
+@app.route("/test", methods=['GET', 'POST'])
+def test():
+    GAME_STARTED = False
     if 'username' not in session:
         return redirect(url_for('login'))
-    if(request.method == "POST" and GAME_STARTED): 
-        #should only allow u to hit if u started the game
-        hit = request.form['hit']
-        print(hit)
-        return render_template('play.html')
-    GAME_STARTED = False
-    if(request.method == "GET"):
-        deckid= get_deck_id()
-        bothhands = get_both_hands(deckid)
-        pcardlist = bothhands[0]
-        dcardlist = bothhands[1]
-        #message = joke()
-    if(GAME_STARTED):
-        return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
-    elif(not GAME_STARTED):
-        card_list = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
-        card_list2 = card_list
-        return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
+    else: #in session
+        if(GAME_STARTED):
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
+        else: #Game not started
+            if(request.method == "GET"):
+                deckid= get_deck_id()
+                bothhands = get_both_hands(deckid)
+                pcardlist = bothhands[0]
+                dcardlist = bothhands[1]
+                GAME_STARTED = True 
+            pcardlist = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
+            dcardlist = pcardlist
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
+
+
+
 
 @app.route("/leaderboard")
 def leaderboard():
