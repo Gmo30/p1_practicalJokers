@@ -102,8 +102,6 @@ def play():
             dhandvalue = get_dealer_value()
             add_Aces_P()
             add_Aces_D()
-            phandvalue = get_player_value()
-            dhandvalue = get_dealer_value()
             return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue) 
         if(move == "stand" and GAME_STARTED):
             while GAME_STARTED and get_dealer_value() < 17:
