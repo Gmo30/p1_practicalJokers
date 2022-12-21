@@ -13,12 +13,12 @@ db=sqlite3.connect(DB_FILE, check_same_thread=False)
 c = db.cursor()
 db.executescript("""
 CREATE TABLE if not exists consoomer(user text, password text, country text, money int);
-CREATE TABLE if not exists dabloons(user text, country text, highest real, current real, recent real);
+CREATE TABLE if not exists dabloons(country text, highest real, current real, recent real);
 CREATE TABLE if not exists country(country text, GDP int);
-CREATE TABLE if not exists dealercards(cardname text, cardname1 text, cardname2 text,cardname3 text, 
+CREATE TABLE if not exists dealercards(cardname text, cardname1 text, cardname2 text,cardname3 text,
     cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
-CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 text,cardname3 text, 
+CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 text,cardname3 text,
     cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
 Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
@@ -58,7 +58,7 @@ def check_pass(username, password):
         c.fetchone()[0]
         c.close()
         return True
-    except: 
+    except:
         c.close()
         return False
 
@@ -177,7 +177,7 @@ def display_card_list(hand):
 
     for k in range(12):
         return_hand.append("None")
-        
+
     return return_hand
 
 def get_player_value():
@@ -195,7 +195,18 @@ def get_dealer_value():
     value = c.fetchone()[0]
     c.close()
     return value
-
+def leaderboard_setup():
+    c=db.cursor()
+    c.execute("SELECT * FROM country")
+    rows = c.fetchall()
+    lst = []
+    lst2 = []
+    for item in rows[0]:
+        lst.append(item)
+    for item in rows[1]:
+        lst2.append(item)
+    c.close()
+    return lst,lst2
 def new_game():
     reset_dealercards()
     reset_dealercards()
