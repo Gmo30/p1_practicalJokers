@@ -185,6 +185,7 @@ def get_dealer_value():
     value = c.fetchone()[0]
     c.close()
     return value
+
 def leaderboard_setup():
     c=db.cursor()
     c.execute("SELECT * FROM country")
@@ -201,3 +202,100 @@ def leaderboard_setup():
 def new_game():
     reset_playercards()
     reset_dealercards()
+
+def check_Aces_P():
+    c=db.cursor()
+    c.execute("SELECT * FROM playercards")
+    rows = c.fetchall()
+    lst = []
+    for item in rows[0]:
+        lst.append(item)
+    lst.pop()
+    value = get_player_value()
+    aces = 0
+    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
+    while(value > 21):
+        if(aces > 0):
+            value -= 10
+        if(aces == 0):
+            break
+        aces-=1
+
+    c.execute("UPDATE playercards SET total_value = ?", (value,))
+    c.close()
+
+def check_Aces_D():
+    c=db.cursor()
+    c.execute("SELECT * FROM dealercards")
+    rows = c.fetchall()
+    lst = []
+    for item in rows[0]:
+        lst.append(item)
+    lst.pop()
+    value = get_player_value()
+    aces = 0
+    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
+    while(value > 21):
+        if(aces > 0):
+            value -= 10
+        if(aces == 0):
+            break
+        aces-=1
+            
+    c.execute("UPDATE dealercards SET total_value = ?", (value,))
+    c.close()
+
+def add_Aces_P():
+    c=db.cursor()
+    c.execute("SELECT * FROM playercards")
+    rows = c.fetchall()
+    lst = []
+    for item in rows[0]:
+        lst.append(item)
+    lst.pop()
+    value = get_player_value()
+    aces = 0
+    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
+    while(value < 21):
+        if(aces > 0):
+            value += 10
+        if(aces == 0):
+            break
+        aces-=1
+
+    c.execute("UPDATE playercards SET total_value = ?", (value,))
+    c.close()
+
+def add_Aces_D():
+    c=db.cursor()
+    c.execute("SELECT * FROM dealercards")
+    rows = c.fetchall()
+    lst = []
+    for item in rows[0]:
+        lst.append(item)
+    lst.pop()
+    value = get_player_value()
+    aces = 0
+    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
+    while(value < 21):
+        if(aces > 0):
+            value += 10
+        if(aces == 0):
+            break
+        aces-=1
+            
+    c.execute("UPDATE dealercards SET total_value = ?", (value,))
+    c.close()
+

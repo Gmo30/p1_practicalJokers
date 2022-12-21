@@ -43,6 +43,8 @@
         <br>
         <br>
 
+        <p>Dealer hand value: {{dhandvalue}}</p>
+
         <div class="container">    
           <div class="row">
             {% for i in range(dval|int) %}
@@ -50,107 +52,6 @@
                   <img src={{card_list2[i]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
                 </div>
             {% endfor %}
-                <!--
-            {% if card_list[1] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[1]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[2] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[2]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[3] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[3]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[4] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[4]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[5] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[5]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[6] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[6]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[7] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[7]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[8] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[8]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[9] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[9]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[10] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[10]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[11] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[11]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            -->
           </div>
         </div>
 
@@ -184,6 +85,8 @@
             {% endfor %}
           </div>
         </div>
+
+        <p>Player hand value: {{phandvalue}}</p>
 
     </body>
 </html>

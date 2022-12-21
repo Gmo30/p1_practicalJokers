@@ -147,3 +147,8 @@ ryanL-- 2022-12-21 14:41
 --------------------------------------------------------------
 Stand works. Need to make it so that ace can be 11 or 1. Leaderboard not tested probably still does not work.
 ==============================================================
+
+ryanL-- 2022-12-21 18:50
+--------------------------------------------------------------
+Displayed player and dealer values. Working on the aces being 1 or 11.
+==============================================================

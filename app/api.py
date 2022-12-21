@@ -33,7 +33,7 @@ def draw1(deck_id):#draws once card from deck and returns tuple of value and ima
     elif value == "KING":
         value = "10"
     elif value == "ACE":
-        value = "1"
+        value = "11"
     return value, dictionary["cards"][0]["images"]["png"]
 
 def draw2(deck_id):#draws once card from deck and returns tuple of both card value and image all strings. Will be called to create first hand.
@@ -48,7 +48,7 @@ def draw2(deck_id):#draws once card from deck and returns tuple of both card val
     elif value1 == "KING":
         value1 = "10"
     elif value1 == "ACE":
-        value1 = "1"
+        value1 = "11"
 
     value2 = dictionary["cards"][1]["value"]
     if value2 == "JACK":
@@ -58,7 +58,7 @@ def draw2(deck_id):#draws once card from deck and returns tuple of both card val
     elif value2 == "KING":
         value2 = "10"
     elif value2 == "ACE":
-        value2 = "1"
+        value2 = "11"
     return value1, dictionary["cards"][0]["images"]["png"],value2, dictionary["cards"][1]["images"]["png"]
 
 # def reset(deck_id):#start a new round of blackjack
