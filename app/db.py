@@ -118,7 +118,7 @@ def add_dealer_card(value, card):
         elif(rows[0][i] != 'None' or added == True):
             lst.append(rows[0][i])
     totalvalue = int(lst[12])
-    reset_playercards()
+    reset_dealercards()
     c.execute("UPDATE dealercards SET cardname = ?, cardname1 = ?, cardname2 = ?,cardname3 = ?, cardname4 = ?, cardname5 = ?, cardname6 = ?, cardname7 = ?, cardname8 = ?, cardname9 = ?, cardname10 = ?, cardname11 = ?,  total_value = ?", (lst[0],lst[1],lst[2],lst[3],lst[4],lst[5],lst[6],lst[7],lst[8],lst[9],lst[10],lst[11],lst[12]))
     #updates value
     totalvalue += int(value)
@@ -162,23 +162,13 @@ def dealer_hand():
     return lst
 
 def display_card_list(hand):
-    index_of_none = 0
+    index_of_none = -1
     for i in range(len(hand)):
         if hand[i] == "None":
             index_of_none = i
             break
 
-    return_hand = []
-    for x in range(6 - (int)(index_of_none / 2)):
-        return_hand.append("None")
-
-    for j in range(index_of_none):
-        return_hand.append(hand[j])
-
-    for k in range(12):
-        return_hand.append("None")
-
-    return return_hand
+    return index_of_none
 
 def get_player_value():
     c=db.cursor()
@@ -207,6 +197,7 @@ def leaderboard_setup():
         lst2.append(item)
     c.close()
     return lst,lst2
+    
 def new_game():
-    reset_dealercards()
+    reset_playercards()
     reset_dealercards()

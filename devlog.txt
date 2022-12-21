@@ -137,3 +137,8 @@ gordonM-- 2022-12-17 21:34
 --------------------------------------------------------------
 worked on play page flask and html stuff. Trying to get play working. 
 ==============================================================
+
+ryanL-- 2022-12-21 01:53
+--------------------------------------------------------------
+Play is working and the hit button functions. Need to finish stand button and leaderboard has error.
+==============================================================

@@ -31,9 +31,9 @@
     </nav>
 
     <br>
-    <form action = "/play" class ="row justify-content-center text-center" method = "GET">
+    <form action = "/play" class ="row justify-content-center text-center" method = "POST">
       <div class="col"> 
-        <button type="submit" name="New Game" class="btn btn-outline-light">New Game</button> 
+        <button type="submit" name="move" value = "new" class="btn btn-outline-light">New Game</button> 
       </div>
     </form>
         
@@ -45,15 +45,12 @@
 
         <div class="container">    
           <div class="row">
-            {% if card_list[0] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list2[0]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
+            {% for i in range(dval|int) %}
+                <div class="col" >
+                  <img src={{card_list2[i]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+                </div>
+            {% endfor %}
+                <!--
             {% if card_list[1] != "None" %}
               <div class="col-1" >
                 <img src={{card_list2[1]}} class="card" style="width:100%" alt="Image">
@@ -153,6 +150,7 @@
                 
               </div>
             {% endif %}
+            -->
           </div>
         </div>
 
@@ -179,114 +177,11 @@
 
         <div class="container">    
           <div class="row">
-            {% if card_list[0] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[0]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[1] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[1]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[2] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[2]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[3] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[3]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[4] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[4]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[5] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[5]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[6] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[6]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[7] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[7]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[8] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[8]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[9] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[9]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[10] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[10]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
-            {% if card_list[11] != "None" %}
-              <div class="col-1" >
-                <img src={{card_list[11]}} class="card" style="width:100%" alt="Image">
-              </div>
-            {% else %}
-              <div class="col-1">
-                
-              </div>
-            {% endif %}
+            {% for i in range(pval|int) %}
+                <div class="col" >
+                  <img src={{card_list[i]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+                </div>
+            {% endfor %}
           </div>
         </div>
 
