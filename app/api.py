@@ -27,11 +27,11 @@ def draw1(deck_id):#draws once card from deck and returns tuple of value and ima
     dictionary = req.json()
     value = dictionary["cards"][0]["value"]
     if value == "JACK":
-        value = "11"
+        value = "10"
     elif value == "QUEEN":
-        value = "12"
+        value = "10"
     elif value == "KING":
-        value = "13"
+        value = "10"
     elif value == "ACE":
         value = "1"
     return value, dictionary["cards"][0]["images"]["png"]
@@ -42,21 +42,21 @@ def draw2(deck_id):#draws once card from deck and returns tuple of both card val
     dictionary = req.json()
     value1 = dictionary["cards"][0]["value"]
     if value1 == "JACK":
-        value1 = "11"
+        value1 = "10"
     elif value1 == "QUEEN":
-        value1 = "12"
+        value1 = "10"
     elif value1 == "KING":
-        value1 = "13"
+        value1 = "10"
     elif value1 == "ACE":
         value1 = "1"
 
     value2 = dictionary["cards"][1]["value"]
     if value2 == "JACK":
-        value2 = "11"
+        value2 = "10"
     elif value2 == "QUEEN":
-        value2 = "12"
+        value2 = "10"
     elif value2 == "KING":
-        value2 = "13"
+        value2 = "10"
     elif value2 == "ACE":
         value2 = "1"
     return value1, dictionary["cards"][0]["images"]["png"],value2, dictionary["cards"][1]["images"]["png"]

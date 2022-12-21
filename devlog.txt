@@ -142,3 +142,8 @@ ryanL-- 2022-12-21 01:53
 --------------------------------------------------------------
 Play is working and the hit button functions. Need to finish stand button and leaderboard has error.
 ==============================================================
+
+ryanL-- 2022-12-21 14:41
+--------------------------------------------------------------
+Stand works. Need to make it so that ace can be 11 or 1. Leaderboard not tested probably still does not work.
+==============================================================

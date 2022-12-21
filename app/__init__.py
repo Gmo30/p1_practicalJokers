@@ -76,19 +76,6 @@ def play():
         GAME_STARTED = False #not sure if necessary
         return redirect(url_for('login'))
     if 'username' in session:
-        '''
-        pcardlist = player_hand()
-        if pcardlist[0] == "None":
-            cardtuple = draw2(deckid)
-            add_player_card(cardtuple[0], cardtuple[1])
-            add_player_card(cardtuple[2], cardtuple[3])
-            pcardlist = player_hand()
-            print(pcardlist)
-        pcardlist = display_card_list(pcardlist)
-        dcardlist = dealer_hand()
-        return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
-
-        '''
         pcardlist = player_hand()
         move = str(request.form.get('move'))
         print(move)
@@ -108,10 +95,41 @@ def play():
                 return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
             return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval) 
         if(move == "stand" and GAME_STARTED):
-            dcardlist = dealer_hand()
+            while GAME_STARTED and get_dealer_value() < 17:
+                pcardlist = player_hand()
+                dcardlist = dealer_hand() 
+                dval = display_card_list(dcardlist)
+                pval = display_card_list(pcardlist)
+                if(get_dealer_value() > 21):
+                    GAME_STARTED = False
+                    return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
+                if(get_dealer_value() == 21):
+                    GAME_STARTED = False
+                    return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
+                if(get_dealer_value() > 17 and get_dealer_value() >= get_player_value()):
+                    GAME_STARTED = False
+                    return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval) 
+                if(get_dealer_value() > 17 and get_dealer_value() < get_player_value()):
+                    GAME_STARTED = False
+                    return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
+                new_card = draw1(deckid)
+                add_dealer_card(new_card[0], new_card[1])
+            pcardlist = player_hand()
+            dcardlist = dealer_hand() 
             dval = display_card_list(dcardlist)
             pval = display_card_list(pcardlist)
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)  
+            if(get_dealer_value() > 21):
+                GAME_STARTED = False
+                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
+            if(get_dealer_value() == 21):
+                GAME_STARTED = False
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
+            if(get_dealer_value() > 17 and get_dealer_value() >= get_player_value()):
+                GAME_STARTED = False
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval) 
+            if(get_dealer_value() > 17 and get_dealer_value() < get_player_value()):
+                GAME_STARTED = False
+                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
         if(move == "new"):
             GAME_STARTED = True
             reset_dealercards()
@@ -150,46 +168,24 @@ def play():
                     dval = display_card_list(dcardlist)
                     pval = display_card_list(pcardlist)
                     return render_template('play.html', message = "You Win", card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
+            if(get_dealer_value() > 17 and get_dealer_value() >= get_player_value()):
+                GAME_STARTED = False
+                dcardlist = dealer_hand()
+                dval = display_card_list(dcardlist)
+                pval = display_card_list(pcardlist)
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval) 
+            if(get_dealer_value() > 17 and get_dealer_value() < get_player_value()):
+                dcardlist = dealer_hand()
+                dval = display_card_list(dcardlist)
+                pval = display_card_list(pcardlist)
+                GAME_STARTED = False
+                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
             else:
                 dcardlist = dealer_hand()
                 dval = display_card_list(dcardlist)
                 pval = display_card_list(pcardlist)
                 return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval)
-
-    '''
-    if(GAME_STARTED):
-        deckid = get_deck_id()
-        bothhands = get_both_hands(deckid)
-        pcardlist = bothhands[0]
-        dcardlist = bothhands[1]
-        print("player value: ")
-        print(get_player_value())
-        move = str(request.form.get('move'))
-        if(move == "hit"):
-            new_card = draw1(deckid)
-            add_player_card(new_card[0], new_card[1])
-            if((get_player_value()) > 21):
-                GAME_STARTED = False
-                return render_template('play.html', message = "You Lose", card_list = pcardlist, card_list2 = dcardlist)
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
-        if(move == "stand"): #stand
-            if(get_dealer_value() <= 17):
-                new_card = draw1(deckid)
-                add_dealer_card(new_card[0], new_card[1])
-                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
-            if(get_player_value() > get_dealer_value()):
-                GAME_STARTED = False
-                return render_template('play.html', message = "You Win", card_list = pcardlist, card_list2 = dcardlist)
-            if(get_player_value() == get_dealer_value()):
-                GAME_STARTED = False
-                return render_template('play.html', message = "You Tied", card_list = pcardlist, card_list2 = dcardlist)
-        return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
-    else: #Game not started 
-        pcardlist = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
-        dcardlist = pcardlist
-
-        return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
-        '''
 
 
 @app.route("/test", methods=['GET', 'POST'])
