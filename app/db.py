@@ -24,6 +24,7 @@ CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 
 Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into consoomer values(?,?,?,?), ('aa', 'password', 'USA', '1000');
+Insert into country values("USA", 10000);
 """)
 c.close()
 #c = db.cursor()
@@ -192,6 +193,7 @@ def leaderboard_setup():
     rows = c.fetchall()
     lst = []
     lst2 = []
+    print("hello")
     for item in rows[0]:
         lst.append(item)
     for item in rows[1]:

@@ -54,12 +54,13 @@
             <table>
             <tr>
                 <th>Country</th>
-                {% for country in countrylist}
-                {% for GDP in gdplist}
+                {% for country in countrylist%}
+                {% for GDP in gdplist %}
               <tr>
-                <td>country</td>
-                <td>GDP</td>
+                <td>{{country}}</td>
+                <td>{{GDP}}</td>
             </tr>
+            {% endfor %}
             {% endfor %}
             </table>
 
