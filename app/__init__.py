@@ -92,12 +92,12 @@ def play():
                 GAME_STARTED = False
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
             if(get_player_value() == 21):
                 GAME_STARTED = False
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
             phandvalue = get_player_value()
             dhandvalue = get_dealer_value()
             if(add[0]):
@@ -188,7 +188,7 @@ def play():
                 sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
             if(get_player_value() > 21):
                 if(pcardlist[0] != 'None'):
                     GAME_STARTED = False
@@ -199,7 +199,7 @@ def play():
                     sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
                     phandvalue = get_player_value()
                     dhandvalue = get_dealer_value()
-                    return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                    return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
             if(get_player_value() == 21):
                 if(pcardlist[0] != 'None'):
                     GAME_STARTED = False
@@ -208,10 +208,10 @@ def play():
                     pval = display_card_list(pcardlist)
                     phandvalue = get_player_value()
                     dhandvalue = get_dealer_value()
-                    return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                    return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
             if(get_dealer_value() >= 17 and get_dealer_value() >= get_player_value()):
                 GAME_STARTED = False
                 dcardlist = dealer_hand()
@@ -221,7 +221,7 @@ def play():
                 sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
             if(get_dealer_value() >= 17 and get_dealer_value() < get_player_value()):
                 dcardlist = dealer_hand()
                 dval = display_card_list(dcardlist)
@@ -231,7 +231,7 @@ def play():
                 sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
             else:
                 dcardlist = dealer_hand()
                 dval = display_card_list(dcardlist)
@@ -244,7 +244,7 @@ def play():
                     add_hand_ace_player(get_player_value(), num_ace_in_P(), add[1])
                 if(add2[0]):
                     add_hand_ace_dealer(get_dealer_value(), num_ace_in_D(), add[1])
-                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
+                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
 
 
 @app.route("/test", methods=['GET', 'POST'])
