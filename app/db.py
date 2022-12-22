@@ -294,5 +294,6 @@ def balance_player(username):
     c=db.cursor()
     c.execute("select money from consoomer where user = ?", (username,))
     balance= c.fetchone()
+    balance = balance[0]
     c.close()
     return balance

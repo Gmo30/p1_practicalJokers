@@ -103,5 +103,12 @@
 
         <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Player hand value: {{phandvalue}}</p>
 
+        <br>
+        <form action="/play" style = "margin-left: auto; margin-right: auto; width:100px;" method="POST">
+          <input type="text" name="move" placeholder="Bet amount" minlength="1">
+        </form>
+        <br>
+
+        <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Your balance: ${{money}}</p>
     </body>
 </html>
