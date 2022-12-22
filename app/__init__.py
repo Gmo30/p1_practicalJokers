@@ -72,6 +72,7 @@ def logout():
 @app.route("/play", methods=['GET', 'POST'])
 def play():
     global GAME_STARTED
+    global PLAYER_STOPPED
     deckid = get_deck_id()
     if 'username' not in session:
         GAME_STARTED = False #not sure if necessary
@@ -80,6 +81,32 @@ def play():
         pcardlist = player_hand()
         move = str(request.form.get('move'))
         print(move)
+        if(move == "new"):
+            GAME_STARTED = True
+            PLAYER_STOPPED = False
+            reset_dealercards()
+            reset_playercards()
+            cardtuple = draw2(deckid)
+            add_player_card(cardtuple[0], cardtuple[1])
+            add_player_card(cardtuple[2], cardtuple[3])
+            add = sub_hand_ace_player(get_player_value(), num_ace_in_P())
+            pcardlist = player_hand()
+            if(add[0]):
+                add_hand_ace_player(get_player_value(), num_ace_in_P(), add[1])
+
+            cardtuple2 = draw2(deckid)
+            add_dealer_card(cardtuple2[0], cardtuple2[1])
+            add_dealer_card(cardtuple2[2], cardtuple2[3])
+            add2 = sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
+            dcardlist = dealer_hand()
+            if(add2[0]):
+                add_hand_ace_dealer(get_dealer_value(), num_ace_in_D(), add[1])
+
+            dval = display_card_list(dcardlist)
+            pval = display_card_list(pcardlist)
+            phandvalue = get_player_value()
+            dhandvalue = get_dealer_value()
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False)
         if(move == "hit" and GAME_STARTED):
             new_card = draw1(deckid)
             add_player_card(new_card[0], new_card[1])
@@ -97,13 +124,16 @@ def play():
                 GAME_STARTED = False
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
+                PLAYER_STOPPED = True
+                return redirect(url_for('login'))
             phandvalue = get_player_value()
             dhandvalue = get_dealer_value()
             if(add[0]):
                 add_hand_ace_player(get_player_value(), num_ace_in_P(), add[1])
             return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
-        if(move == "stand" and GAME_STARTED):
+        if((move == "stand" and GAME_STARTED) or (PLAYER_STOPPED and GAME_STARTED)):
+            if(PLAYER_STOPPED):
+                print("you won and dealer goes")
             while GAME_STARTED:
                 pcardlist = player_hand()
                 dcardlist = dealer_hand()
@@ -115,6 +145,11 @@ def play():
                     phandvalue = get_player_value()
                     dhandvalue = get_dealer_value()
                     return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
+                elif(get_dealer_value() >= 17 and get_dealer_value() == get_player_value()):
+                    GAME_STARTED = False
+                    phandvalue = get_player_value()
+                    dhandvalue = get_dealer_value()
+                    return render_template('play.html', message = "Tie",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
                 elif(get_dealer_value() == 21):
                     GAME_STARTED = False
                     phandvalue = get_player_value()
@@ -153,31 +188,6 @@ def play():
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
                 return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True)
-        if(move == "new"):
-            GAME_STARTED = True
-            reset_dealercards()
-            reset_playercards()
-            cardtuple = draw2(deckid)
-            add_player_card(cardtuple[0], cardtuple[1])
-            add_player_card(cardtuple[2], cardtuple[3])
-            add = sub_hand_ace_player(get_player_value(), num_ace_in_P())
-            pcardlist = player_hand()
-            if(add[0]):
-                add_hand_ace_player(get_player_value(), num_ace_in_P(), add[1])
-
-            cardtuple2 = draw2(deckid)
-            add_dealer_card(cardtuple2[0], cardtuple2[1])
-            add_dealer_card(cardtuple2[2], cardtuple2[3])
-            add2 = sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
-            dcardlist = dealer_hand()
-            if(add2[0]):
-                add_hand_ace_dealer(get_dealer_value(), num_ace_in_D(), add[1])
-
-            dval = display_card_list(dcardlist)
-            pval = display_card_list(pcardlist)
-            phandvalue = get_player_value()
-            dhandvalue = get_dealer_value()
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False)
         else:
             if(pcardlist[0] == 'None'):
                 pcardlist = player_hand()
