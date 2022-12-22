@@ -272,14 +272,14 @@ def add_hand_ace_player(val, aces, times):
     for i in range(times):
         val += 10
         aces -=1
-    set_hand_val_player(val)  
+    set_hand_val_player(val)
 
 def add_hand_ace_dealer(val, aces, times):
     for i in range(times):
         val += 10
         aces -=1
     set_hand_val_dealer(val)
-    
+
 def set_hand_val_player(value):
     c=db.cursor()
     c.execute("UPDATE playercards SET total_value = ?", (value,))
@@ -289,3 +289,10 @@ def set_hand_val_dealer(value):
     c=db.cursor()
     c.execute("UPDATE dealercards SET total_value = ?", (value,))
     c.close()
+    
+def balance_player(username):
+    c=db.cursor()
+    c.execute("select money from consoomer where user = ?", (username,))
+    balance= c.fetchone()
+    c.close()
+    return balance
