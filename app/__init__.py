@@ -8,7 +8,7 @@ time spent: 8 hours
 from flask import Flask, render_template, request, redirect, url_for, session
 from db import *
 from api import *
-app = Flask(__name__) 
+app = Flask(__name__)
 app.secret_key = b'foo'
 GAME_STARTED = False
 
@@ -69,7 +69,7 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route("/play", methods=['GET', 'POST'])
-def play():  
+def play():
     global GAME_STARTED
     deckid = get_deck_id()
     if 'username' not in session:
@@ -102,7 +102,7 @@ def play():
             dhandvalue = get_dealer_value()
             add_Aces_P()
             add_Aces_D()
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue) 
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
         if(move == "stand" and GAME_STARTED):
             while GAME_STARTED and get_dealer_value() < 17:
                 pcardlist = player_hand()
@@ -125,7 +125,7 @@ def play():
                     GAME_STARTED = False
                     phandvalue = get_player_value()
                     dhandvalue = get_dealer_value()
-                    return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue) 
+                    return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
                 elif(get_dealer_value() >= 17 and get_dealer_value() < get_player_value()):
                     GAME_STARTED = False
                     phandvalue = get_player_value()
@@ -136,7 +136,7 @@ def play():
                 new_card = draw1(deckid)
                 add_dealer_card(new_card[0], new_card[1])
             pcardlist = player_hand()
-            dcardlist = dealer_hand() 
+            dcardlist = dealer_hand()
             dval = display_card_list(dcardlist)
             pval = display_card_list(pcardlist)
             if(get_dealer_value() > 21):
@@ -148,7 +148,7 @@ def play():
                 GAME_STARTED = False
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue) 
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
             if(get_dealer_value() < get_player_value()):
                 GAME_STARTED = False
                 phandvalue = get_player_value()
@@ -172,7 +172,7 @@ def play():
             pval = display_card_list(pcardlist)
             phandvalue = get_player_value()
             dhandvalue = get_dealer_value()
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue) 
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
         else:
             if(pcardlist[0] == 'None'):
                 pcardlist = player_hand()
@@ -181,7 +181,7 @@ def play():
                 pval = display_card_list(pcardlist)
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue) 
+                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
             if(get_player_value() > 21):
                 if(pcardlist[0] != 'None'):
                     GAME_STARTED = False
@@ -210,7 +210,7 @@ def play():
                 pval = display_card_list(pcardlist)
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
-                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue) 
+                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
             if(get_dealer_value() >= 17 and get_dealer_value() < get_player_value()):
                 dcardlist = dealer_hand()
                 dval = display_card_list(dcardlist)
@@ -242,10 +242,10 @@ def test():
                 bothhands = get_both_hands(deckid)
                 pcardlist = bothhands[0]
                 dcardlist = bothhands[1]
-                GAME_STARTED = True 
+                GAME_STARTED = True
             pcardlist = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
             dcardlist = pcardlist
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)  
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
 
 
 
@@ -255,15 +255,14 @@ def leaderboard():
     if 'username' not in session:
         return redirect(url_for('login'))
     mon = leaderboard_setup()
-    country = mon[0]
-    gdp = mon[1]
-    return render_template('leaderboard.html', countrylist = country, gdplist = gdp) 
+    ey=player_leaderboard_setup()
+    return render_template('leaderboard.html', mon = mon, ey=ey) 
 
 @app.route("/profile", methods=['GET', 'POST'])
 def profile():
     if 'username' not in session:
         return redirect(url_for('login'))
-    if(request.method == "POST"): 
+    if(request.method == "POST"):
         country = request.form["country"]
         update_country(session['username'], country)
         return render_template('profile.html', username = session['username'], message = "Updated country")

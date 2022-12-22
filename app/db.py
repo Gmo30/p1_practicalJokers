@@ -24,7 +24,6 @@ CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 
 Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into consoomer values(?,?,?,?), ('aa', 'password', 'USA', '1000');
-Insert into country values("USA", 10000);
 """)
 c.close()
 #c = db.cursor()
@@ -189,115 +188,18 @@ def get_dealer_value():
 
 def leaderboard_setup():
     c=db.cursor()
-    c.execute("SELECT * FROM country")
+    c.execute("SELECT country,highest,current FROM dabloons")
     rows = c.fetchall()
-    lst = []
-    lst2 = []
-    print("hello")
-    for item in rows[0]:
-        lst.append(item)
-    for item in rows[1]:
-        lst2.append(item)
     c.close()
-    return lst,lst2
-    
+    return rows
+
+def player_leaderboard_setup():
+    c=db.cursor()
+    c.execute("SELECT user,country,money FROM consoomer")
+    rows = c.fetchall()
+    c.close()
+    return rows
+
 def new_game():
     reset_playercards()
     reset_dealercards()
-
-def check_Aces_P():
-    c=db.cursor()
-    c.execute("SELECT * FROM playercards")
-    rows = c.fetchall()
-    lst = []
-    for item in rows[0]:
-        lst.append(item)
-    lst.pop()
-    value = get_player_value()
-    aces = 0
-    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
-    while(value > 21):
-        if(aces > 0):
-            value -= 10
-        if(aces == 0):
-            break
-        aces-=1
-
-    c.execute("UPDATE playercards SET total_value = ?", (value,))
-    c.close()
-
-def check_Aces_D():
-    c=db.cursor()
-    c.execute("SELECT * FROM dealercards")
-    rows = c.fetchall()
-    lst = []
-    for item in rows[0]:
-        lst.append(item)
-    lst.pop()
-    value = get_player_value()
-    aces = 0
-    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
-    while(value > 21):
-        if(aces > 0):
-            value -= 10
-        if(aces == 0):
-            break
-        aces-=1
-            
-    c.execute("UPDATE dealercards SET total_value = ?", (value,))
-    c.close()
-
-def add_Aces_P():
-    c=db.cursor()
-    c.execute("SELECT * FROM playercards")
-    rows = c.fetchall()
-    lst = []
-    for item in rows[0]:
-        lst.append(item)
-    lst.pop()
-    value = get_player_value()
-    aces = 0
-    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
-    while(value < 21):
-        if(aces > 0):
-            value += 10
-        if(aces == 0):
-            break
-        aces-=1
-
-    c.execute("UPDATE playercards SET total_value = ?", (value,))
-    c.close()
-
-def add_Aces_D():
-    c=db.cursor()
-    c.execute("SELECT * FROM dealercards")
-    rows = c.fetchall()
-    lst = []
-    for item in rows[0]:
-        lst.append(item)
-    lst.pop()
-    value = get_player_value()
-    aces = 0
-    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
-    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
-    while(value < 21):
-        if(aces > 0):
-            value += 10
-        if(aces == 0):
-            break
-        aces-=1
-            
-    c.execute("UPDATE dealercards SET total_value = ?", (value,))
-    c.close()
-
