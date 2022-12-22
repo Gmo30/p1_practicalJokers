@@ -42,16 +42,30 @@
         <br>
         <br>
         <br>
-
-        <p>Dealer hand value: {{dhandvalue}}</p>
+        {% if showdealer %}
+          <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Dealer hand value: {{dhandvalue}}</p>
+        {% else %}
+          <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Dealer hand value: ?</p>
+        {% endif %}
 
         <div class="container">    
           <div class="row">
-            {% for i in range(dval|int) %}
-                <div class="col" >
-                  <img src={{card_list2[i]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
-                </div>
-            {% endfor %}
+            {% if showdealer %}
+              {% for i in range(dval|int) %}
+                  <div class="col" >
+                    <img src={{card_list2[i]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+                  </div>
+              {% endfor %}
+            {% else %}
+              <div class="col" >
+                <img src="https://www.seekpng.com/png/detail/121-1215767_back-of-card-cards-back.png" class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+              </div>
+              {% for i in range(dval|int - 1) %}
+                  <div class="col" >
+                    <img src={{card_list2[i+1]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+                  </div>
+              {% endfor %} 
+            {% endif %}
           </div>
         </div>
 
@@ -76,6 +90,9 @@
           </div>
         </form>
 
+        <br>
+        <br>
+
         <div class="container">    
           <div class="row">
             {% for i in range(pval|int) %}
@@ -86,7 +103,10 @@
           </div>
         </div>
 
-        <p>Player hand value: {{phandvalue}}</p>
+        <br>
+        <br>
+
+        <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Player hand value: {{phandvalue}}</p>
 
     </body>
 </html>

@@ -155,5 +155,5 @@ Displayed player and dealer values. Working on the aces being 1 or 11.
 
 ryanL-- 2022-12-21 23:35
 --------------------------------------------------------------
-Aces work.
+Aces work. Updated play.html to show back of card.
 ==============================================================
