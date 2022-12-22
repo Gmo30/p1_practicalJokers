@@ -82,10 +82,9 @@ def play():
         if(move == "hit" and GAME_STARTED):
             new_card = draw1(deckid)
             add_player_card(new_card[0], new_card[1])
-            check_Aces_P()
-            check_Aces_D()
             pcardlist = player_hand()
             dcardlist = dealer_hand()
+            add = sub_hand_ace_player(get_player_value(), num_ace_in_P())
             dval = display_card_list(dcardlist)
             pval = display_card_list(pcardlist)
             if(get_player_value() > 21):
@@ -100,15 +99,14 @@ def play():
                 return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
             phandvalue = get_player_value()
             dhandvalue = get_dealer_value()
-            add_Aces_P()
-            add_Aces_D()
+            if(add[0]):
+                add_hand_ace_player(get_player_value(), num_ace_in_P(), add[1])
             return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
         if(move == "stand" and GAME_STARTED):
             while GAME_STARTED and get_dealer_value() < 17:
                 pcardlist = player_hand()
                 dcardlist = dealer_hand()
-                check_Aces_P()
-                check_Aces_D()
+                add = sub_hand_ace_player(get_player_value(), num_ace_in_P())
                 dval = display_card_list(dcardlist)
                 pval = display_card_list(pcardlist)
                 if(get_dealer_value() > 21):
@@ -131,8 +129,8 @@ def play():
                     phandvalue = get_player_value()
                     dhandvalue = get_dealer_value()
                     return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue)
-                add_Aces_P()
-                add_Aces_D()
+                if(add[0]):
+                    add_hand_ace_player(get_player_value(), num_ace_in_P(), add[1])
                 new_card = draw1(deckid)
                 add_dealer_card(new_card[0], new_card[1])
             pcardlist = player_hand()

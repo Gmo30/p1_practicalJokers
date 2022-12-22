@@ -203,3 +203,89 @@ def player_leaderboard_setup():
 def new_game():
     reset_playercards()
     reset_dealercards()
+
+def num_ace_in_P():
+    c=db.cursor()
+    c.execute("SELECT * FROM playercards")
+    rows = c.fetchall()
+    lst = []
+    for item in rows[0]:
+        lst.append(item)
+    lst.pop()
+    value = get_player_value()
+    aces = 0
+    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
+
+    c.close()
+    return aces
+
+def num_ace_in_D():
+    c=db.cursor()
+    c.execute("SELECT * FROM dealercards")
+    rows = c.fetchall()
+    lst = []
+    for item in rows[0]:
+        lst.append(item)
+    lst.pop()
+    value = get_player_value()
+    aces = 0
+    aces += lst.count("https://deckofcardsapi.com/static/img/aceDiamonds.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AC.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AH.png")
+    aces += lst.count("https://deckofcardsapi.com/static/img/AS.png")
+    c.close()
+    return aces
+
+def sub_hand_ace_player(val, aces):
+    booleanreturn = False
+    times = 0
+    while val > 21:
+        if(aces != 0):
+            booleanreturn = True
+            val -= 10
+            aces -=1
+            times += 1
+        if(aces == 0):
+            break
+    set_hand_val_player(val)
+    return booleanreturn, times
+
+
+def sub_hand_ace_dealer(val, aces):
+    booleanreturn = False
+    times = 0
+    while val > 21:
+        if(aces != 0):
+            booleanreturn = True
+            val -= 10
+            aces -=1
+            times += 1
+        if(aces == 0):
+            break
+    set_hand_val_dealer(val)
+    return booleanreturn, times
+
+def add_hand_ace_player(val, aces, times):
+    for i in range(times):
+        val += 10
+        aces -=1
+    set_hand_val_player(val)  
+
+def add_hand_ace_dealer(val, aces, times):
+    for i in range(times):
+        val += 10
+        aces -=1
+    set_hand_val_dealer(val)
+    
+def set_hand_val_player(value):
+    c=db.cursor()
+    c.execute("UPDATE playercards SET total_value = ?", (value,))
+    c.close()
+
+def set_hand_val_dealer(value):
+    c=db.cursor()
+    c.execute("UPDATE dealercards SET total_value = ?", (value,))
+    c.close()
