@@ -287,7 +287,7 @@ def profile():
         update_country(session['username'], country)
         return render_template('profile.html', username = session['username'], message = "Updated country")
 
-    return render_template('profile.html', username = session['username'])
+    return render_template('profile.html', username = session['username'], joke = joke())
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
