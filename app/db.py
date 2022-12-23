@@ -22,7 +22,7 @@ CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
 Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
-INSERT into consoomer values('aa','password','Canada','1000000', '9999999999');
+INSERT into consoomer values(?,?,?,?,?), ('aa','password', 'Canada', 1000000, 9999999999);
 """)
 c.close()
 #c = db.cursor()
@@ -47,7 +47,7 @@ def user_exists(username):
 
 def add_user(username, password, country):
     c=db.cursor()
-    c.execute("Insert into consoomer values(?,?,?,?,?)", (username, password, country, "1000", "1000"))
+    c.execute("Insert into consoomer values(?,?,?,?,?)", (username, password, country, 1000, 1000))
     c.close()
 
 def check_pass(username, password):
@@ -71,6 +71,8 @@ def update_money_win(username, money_bet):
     c.execute("select money from consoomer where user = ?", (username,))
     before_bet = c.fetchone()
     after_bet = before_bet[0] + money_bet
+    c.close()
+    c=db.cursor()
     c.execute("UPDATE consoomer SET money = ? WHERE user =?", (after_bet, username))
     c.close()
     update_country_money(get_user_country(username), money_bet)
@@ -79,7 +81,9 @@ def update_money_lose(username, money_bet):
     c=db.cursor()
     c.execute("select money from consoomer where user = ?", (username,))
     before_bet = c.fetchone()
+    c.close()
     after_bet = before_bet[0] - money_bet
+    c=db.cursor()
     c.execute("UPDATE consoomer SET money = ? WHERE user =?", (after_bet, username))
     c.close()
     update_country_money(get_user_country(username), money_bet)
@@ -87,23 +91,31 @@ def update_money_lose(username, money_bet):
 def update_country_money(country, money_bet):
     c=db.cursor()
     c.execute("select current from country where name = ?", (country,))
-    old_current = c.fetchall()
-    new_current = old_current + money_bet
-    c.execute("UPDATE country SET current = ?, recent = ? where name = ?", (new_current, money_bet, country))
-    c.close()
+    try:
+        old_current = c.fetchone()[0]
+        c.close()
+        new_current = old_current + money_bet
+    except:
+        new_current = money_bet
+    else:
+        c=db.cursor()
+        c.execute("UPDATE country SET current = ?, recent = ? where name = ?", (new_current, money_bet, country))
+        c.close()
+    
 
 def get_user_country(username):
     c=db.cursor()
     c.execute("select country from consoomer where user = ?", (username,))
-    country = c.fetchone()
+    country = c.fetchone()[0]
     c.close()
+    print(country)
     return country 
 
 def update_user_highest(username, money_bet):
     c=db.cursor()
     c.execute("select highest, money from consoomer where user = ?", (username,))
     old_highest = c.fetchone()
-    c.pop()
+    c.close()
     money = c.fetchone()
     if(money > old_highest): 
         c.execute("UPDATE consoomer SET highest = ? where user = ?", (money, username))

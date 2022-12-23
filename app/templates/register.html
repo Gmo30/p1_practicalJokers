@@ -50,11 +50,12 @@
             <input type="password" name="password" class="form-control" placeholder="password" minlength="8">
             <input type="password" name="password_confirm" class="form-control" placeholder="confirm password" minlength="8">
 
-            <select class="form-select" name= "country" aria-label="country selected">
-              <option selected>Select a country</option>
-              <option value="1">USA</option>
-              <option value="2">Canada</option>
-              <option value="3">United Kingdom</option>
+              <select class="form-select" name= "country" aria-label="country selected">
+                <option selected>Select a country (to play as)</option>
+                {%for country in all_countries%}
+                <option value="{{country}}">{{country}}</option>
+                {%endfor%}
+              </select>
             </select>
 
             <button type="submit" class="btn btn-outline-dark">Sign Up</button>
