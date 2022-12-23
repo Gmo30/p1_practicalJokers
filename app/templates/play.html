@@ -77,7 +77,7 @@
         <br>
         <h2 class="text-center">{{message}}</h2>
         {% if not has_bet %}
-          <form action="/play" style = "margin-left: auto; margin-right: auto; width:100px;" method="POST">
+          <form action="/play" style = "margin-left: auto; margin-right: auto; width:200px; left:100px;" method="POST">
             <input type="text" name="move" placeholder="Bet amount" minlength="1">
           </form>
         {% endif %}
@@ -97,7 +97,7 @@
           <div class="row">
             {% if not has_bet %}
               <div class="col" >
-                <img src="https://www.seekpng.com/png/detail/121-1215767_back-of-card-cards-back.png" class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+                <img src="https://www.seekpng.com/png/detail/121-1215767_back-of-card-cards-back.png" class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto;" alt="Image">
               </div>
               <div class="col" >
                 <img src="https://www.seekpng.com/png/detail/121-1215767_back-of-card-cards-back.png" class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
@@ -127,3 +127,4 @@
         <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Your balance: ${{money}}</p>
     </body>
 </html>
+
