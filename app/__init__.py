@@ -216,7 +216,35 @@ def play():
                     money = balance_player(session['username'])
                     return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money, has_bet = HAS_BET)
         if(move != 'new' or move != 'stand' or move != 'hit' or move != 'None'):
-            if(move.isdigit()):
+            if(not GAME_STARTED):
+                GAME_STARTED = True
+                PLAYER_STOPPED = False
+                HAS_BET = True
+                reset_dealercards()
+                reset_playercards()
+                cardtuple = draw2(deckid)
+                add_player_card(cardtuple[0], cardtuple[1])
+                add_player_card(cardtuple[2], cardtuple[3])
+                add = sub_hand_ace_player(get_player_value(), num_ace_in_P())
+                pcardlist = player_hand()
+                if(add[0]):
+                    add_hand_ace_player(get_player_value(), num_ace_in_P(), add[1])
+
+                cardtuple2 = draw2(deckid)
+                add_dealer_card(cardtuple2[0], cardtuple2[1])
+                add_dealer_card(cardtuple2[2], cardtuple2[3])
+                add2 = sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
+                dcardlist = dealer_hand()
+                if(add2[0]):
+                    add_hand_ace_dealer(get_dealer_value(), num_ace_in_D(), add[1])
+
+                dval = display_card_list(dcardlist)
+                pval = display_card_list(pcardlist)
+                phandvalue = get_player_value()
+                dhandvalue = get_dealer_value()
+                money = balance_player(session['username'])
+                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False, money = money, has_bet = HAS_BET)
+            if(move.isdigit() and int(move) <= balance_player(session['username']) and int(move) >= 0):
                 HAS_BET = True
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
@@ -236,7 +264,7 @@ def play():
                 pval = display_card_list(pcardlist)
                 HAS_BET = False
                 money = balance_player(session['username'])
-                return render_template('play.html', message = "Please type a numerical amount", card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False, money = money, has_bet = HAS_BET)
+                return render_template('play.html', message = "Please type a valid numerical amount", card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False, money = money, has_bet = HAS_BET)
 
         else:
             if(pcardlist[0] == 'None'):
@@ -313,26 +341,6 @@ def play():
                     add_hand_ace_dealer(get_dealer_value(), num_ace_in_D(), add[1])
                 return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
 
-
-
-@app.route("/test", methods=['GET', 'POST'])
-def test():
-    GAME_STARTED = False
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    else: #in session
-        if(GAME_STARTED):
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
-        else: #Game not started
-            if(request.method == "GET"):
-                deckid= get_deck_id()
-                bothhands = get_both_hands(deckid)
-                pcardlist = bothhands[0]
-                dcardlist = bothhands[1]
-                GAME_STARTED = True
-            pcardlist = ['None','None','None','None','None','None','None','None','None','None','None','None', 0]
-            dcardlist = pcardlist
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist)
 
 
 
