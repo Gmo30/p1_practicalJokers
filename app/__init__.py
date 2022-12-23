@@ -73,6 +73,8 @@ def logout():
 def play():
     global GAME_STARTED
     global PLAYER_STOPPED
+    global HAS_BET
+    global bet
     deckid = get_deck_id()
     if 'username' not in session:
         GAME_STARTED = False #not sure if necessary
@@ -84,6 +86,7 @@ def play():
         if(move == "new"):
             GAME_STARTED = True
             PLAYER_STOPPED = False
+            HAS_BET = False
             reset_dealercards()
             reset_playercards()
             cardtuple = draw2(deckid)
@@ -107,8 +110,8 @@ def play():
             phandvalue = get_player_value()
             dhandvalue = get_dealer_value()
             money = balance_player(session['username'])
-            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False, money = money)
-        if(move == "hit" and GAME_STARTED):
+            return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False, money = money, has_bet = HAS_BET)
+        if(move == "hit" and GAME_STARTED and HAS_BET):
             new_card = draw1(deckid)
             add_player_card(new_card[0], new_card[1])
             pcardlist = player_hand()
@@ -135,10 +138,49 @@ def play():
                 add_hand_ace_player(get_player_value(), num_ace_in_P(), add[1])
             return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, money = money)
         if(move == "stand" and GAME_STARTED or GAME_STARTED and PLAYER_STOPPED):
-            while GAME_STARTED:
+            if(HAS_BET):
+                while GAME_STARTED:
+                    pcardlist = player_hand()
+                    dcardlist = dealer_hand()
+                    add = sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
+                    dval = display_card_list(dcardlist)
+                    pval = display_card_list(pcardlist)
+                    if(get_dealer_value() > 21):
+                        GAME_STARTED = False
+                        phandvalue = get_player_value()
+                        dhandvalue = get_dealer_value()
+                        money = balance_player(session['username'])
+                        return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
+                    elif(get_dealer_value() >= 17 and get_dealer_value() == get_player_value()):
+                        GAME_STARTED = False
+                        phandvalue = get_player_value()
+                        dhandvalue = get_dealer_value()
+                        money = balance_player(session['username'])
+                        return render_template('play.html', message = "Tie",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
+                    elif(get_dealer_value() == 21):
+                        GAME_STARTED = False
+                        phandvalue = get_player_value()
+                        dhandvalue = get_dealer_value()
+                        money = balance_player(session['username'])
+                        return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
+                    elif(get_dealer_value() >= 17 and get_dealer_value() > get_player_value()):
+                        GAME_STARTED = False
+                        phandvalue = get_player_value()
+                        dhandvalue = get_dealer_value()
+                        money = balance_player(session['username'])
+                        return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
+                    elif(get_dealer_value() >= 17 and get_dealer_value() < get_player_value()):
+                        GAME_STARTED = False
+                        phandvalue = get_player_value()
+                        dhandvalue = get_dealer_value()
+                        money = balance_player(session['username'])
+                        return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
+                    if(add[0]):
+                        add_hand_ace_dealer(get_dealer_value(), num_ace_in_D(), add[1])
+                    new_card = draw1(deckid)
+                    add_dealer_card(new_card[0], new_card[1])
                 pcardlist = player_hand()
                 dcardlist = dealer_hand()
-                add = sub_hand_ace_dealer(get_dealer_value(), num_ace_in_D())
                 dval = display_card_list(dcardlist)
                 pval = display_card_list(pcardlist)
                 if(get_dealer_value() > 21):
@@ -147,56 +189,41 @@ def play():
                     dhandvalue = get_dealer_value()
                     money = balance_player(session['username'])
                     return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
-                elif(get_dealer_value() >= 17 and get_dealer_value() == get_player_value()):
-                    GAME_STARTED = False
-                    phandvalue = get_player_value()
-                    dhandvalue = get_dealer_value()
-                    money = balance_player(session['username'])
-                    return render_template('play.html', message = "Tie",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
-                elif(get_dealer_value() == 21):
+                if(get_dealer_value() >= get_player_value()):
                     GAME_STARTED = False
                     phandvalue = get_player_value()
                     dhandvalue = get_dealer_value()
                     money = balance_player(session['username'])
                     return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
-                elif(get_dealer_value() >= 17 and get_dealer_value() > get_player_value()):
-                    GAME_STARTED = False
-                    phandvalue = get_player_value()
-                    dhandvalue = get_dealer_value()
-                    money = balance_player(session['username'])
-                    return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
-                elif(get_dealer_value() >= 17 and get_dealer_value() < get_player_value()):
+                if(get_dealer_value() < get_player_value()):
                     GAME_STARTED = False
                     phandvalue = get_player_value()
                     dhandvalue = get_dealer_value()
                     money = balance_player(session['username'])
                     return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
-                if(add[0]):
-                    add_hand_ace_dealer(get_dealer_value(), num_ace_in_D(), add[1])
-                new_card = draw1(deckid)
-                add_dealer_card(new_card[0], new_card[1])
-            pcardlist = player_hand()
-            dcardlist = dealer_hand()
-            dval = display_card_list(dcardlist)
-            pval = display_card_list(pcardlist)
-            if(get_dealer_value() > 21):
-                GAME_STARTED = False
+        if(move != 'new' or move != 'stand' or move != 'hit' or move != 'None'):
+            if(move.isdigit()):
+                HAS_BET = True
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
                 money = balance_player(session['username'])
-                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
-            if(get_dealer_value() >= get_player_value()):
-                GAME_STARTED = False
+                pcardlist = player_hand()
+                dcardlist = dealer_hand()
+                dval = display_card_list(dcardlist)
+                pval = display_card_list(pcardlist)
+                bet = int(move)
+                return render_template('play.html', card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False, money = money, has_bet = HAS_BET)
+            else:
                 phandvalue = get_player_value()
                 dhandvalue = get_dealer_value()
                 money = balance_player(session['username'])
-                return render_template('play.html', message = "You Lose",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
-            if(get_dealer_value() < get_player_value()):
-                GAME_STARTED = False
-                phandvalue = get_player_value()
-                dhandvalue = get_dealer_value()
-                money = balance_player(session['username'])
-                return render_template('play.html', message = "You Win",  card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = True, money = money)
+                pcardlist = player_hand()
+                dcardlist = dealer_hand()
+                dval = display_card_list(dcardlist)
+                pval = display_card_list(pcardlist)
+                HAS_BET = False
+                return render_template('play.html', message = "Please type a numerical amount", card_list = pcardlist, card_list2 = dcardlist, dval = dval, pval = pval, phandvalue = phandvalue, dhandvalue = dhandvalue, showdealer = False, money = money, has_bet = HAS_BET)
+
         else:
             if(pcardlist[0] == 'None'):
                 pcardlist = player_hand()
@@ -313,7 +340,7 @@ def profile():
         update_country(session['username'], country)
         return render_template('profile.html', username = session['username'], message = "Updated country")
 
-    return render_template('profile.html', username = session['username'], joke = joke())
+    return render_template('profile.html', username = session['username'], joke = joke(), all_countries = get_countries())
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
