@@ -87,7 +87,7 @@ def update_money_lose(username, money_bet):
 def update_country_money(country, money_bet):
     c=db.cursor()
     c.execute("select current from country where name = ?", (country,))
-    old_current = c.fetchone()
+    old_current = c.fetchall()
     new_current = old_current + money_bet
     c.execute("UPDATE country SET current = ?, recent = ? where name = ?", (new_current, money_bet, country))
     c.close()
