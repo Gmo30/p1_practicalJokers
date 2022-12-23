@@ -36,10 +36,13 @@ c.close()
 def add_aa():
     c=db.cursor()
     c.execute("Select user from consoomer where user = ?", ("aa",))
-    if c.fetchone() == "":
-        c.pop()
-        c.execute("Insert into consoomer values('aa', 'password', 'USA', '1000', '1000')")
-        c.close()
+    user = c.fetchone()
+    if user is None:
+        c=db.cursor()
+        c.execute("INSERT into consoomer values('aa','password','Canada','1000000', '9999999999')")
+    c.close()
+
+add_aa()
 
 def user_exists(username):
     c=db.cursor()
@@ -54,7 +57,7 @@ def user_exists(username):
 
 def add_user(username, password, country):
     c=db.cursor()
-    c.execute("Insert into consoomer values(?,?,?,?)", (username, password, country, "1000", "1000"))
+    c.execute("Insert into consoomer values(?,?,?,?,?)", (username, password, country, "1000", "1000"))
     c.close()
 
 def check_pass(username, password):
