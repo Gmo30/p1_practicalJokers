@@ -13,6 +13,10 @@ app = Flask(__name__)
 app.secret_key = b'foo'
 GAME_STARTED = False
 
+#hardcoded for leaderboard and login
+
+hard_coded()
+
 @app.route("/", methods=['GET', 'POST'])
 def login():
     if 'username' in session:
@@ -41,7 +45,7 @@ def register():
     if 'username' in session:
         return redirect(url_for('play'))
     if(request.method == "GET"):
-        return render_template('register.html')  #displays register page
+        return render_template('register.html', all_countries = get_countries())  #displays register page
     else:
         username = request.form['username']
         password = request.form['password']
@@ -58,6 +62,7 @@ def register():
                 return render_template('register.html', message = "Please enter password")
             if(password == password_confirm):
                 add_user(username, password, country)
+                add_joke(username,joke())
                 return redirect(url_for('login')) #when you register, redirects you to login
             else:
                 return render_template('register.html', message = "Passwords don't match")
@@ -337,19 +342,21 @@ def leaderboard():
     if 'username' not in session:
         return redirect(url_for('login'))
     mon = leaderboard_setup()
-    ey=player_leaderboard_setup()
+    ey= player_leaderboard_setup()
     return render_template('leaderboard.html', mon = mon, ey=ey) 
 
 @app.route("/profile", methods=['GET', 'POST'])
 def profile():
     if 'username' not in session:
         return redirect(url_for('login'))
+    if(request.method == "GET"):
+        new_joke = joke()
     if(request.method == "POST"):
         country = request.form["country"]
         update_user_country(session['username'], country)
         return render_template('profile.html', username = session['username'], message = "Updated country")
 
-    return render_template('profile.html', username = session['username'], joke = joke(), all_countries = get_countries())
+    return render_template('profile.html', username = session['username'], joke = get_joke(session['username']), all_countries = get_countries())
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change

@@ -13,6 +13,7 @@ db=sqlite3.connect(DB_FILE, check_same_thread=False)
 c = db.cursor()
 db.executescript("""
 CREATE TABLE if not exists consoomer(user text, password text, country text, money int, highest int);
+CREATE TABLE if not exists jokes(user text, joke text);
 CREATE TABLE if not exists country(name text, current int, recent int);
 CREATE TABLE if not exists dealercards(cardname text, cardname1 text, cardname2 text,cardname3 text,
     cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
@@ -22,7 +23,6 @@ CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
 Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
-INSERT into consoomer values(?,?,?,?,?), ('aa','password', 'Canada', 1000000, 9999999999);
 """)
 c.close()
 #c = db.cursor()
@@ -33,6 +33,10 @@ c.close()
 #cursor fetchone
 # get tuple
 # for loop to check nones, then update cardnameN to card given
+def add_country(name, current, recent):
+    c=db.cursor()
+    c.execute("Insert into country values(?,?,?)", (name, current, recent))
+    c.close()
 
 def user_exists(username):
     c=db.cursor()
@@ -45,9 +49,27 @@ def user_exists(username):
         c.close()
         return False
 
+def add_joke(username, joke):
+    c=db.cursor()
+    c.execute("Insert into jokes values(?,?)", (username, joke))
+    c.close()
+
+def update_joke(username, joke):
+    c=db.cursor()
+    c.execute("UPDATE jokes SET joke = ? where user = ?", (joke, user))
+    c.close()
+
+def get_joke(username):
+    c= db.cursor()
+    c.execute("SELECT joke from jokes where user = ?", (username,))
+    joke = c.fetchone()
+    c.close()
+    return joke 
+
 def add_user(username, password, country):
     c=db.cursor()
     c.execute("Insert into consoomer values(?,?,?,?,?)", (username, password, country, 1000, 1000))
+    db.commit()
     c.close()
 
 def check_pass(username, password):
@@ -227,14 +249,14 @@ def get_dealer_value():
 
 def leaderboard_setup():
     c=db.cursor()
-    c.execute("SELECT name,recent ,current  FROM country")
+    c.execute("SELECT name, recent, current FROM country")
     rows = c.fetchall()
     c.close()
     return rows
 
 def player_leaderboard_setup():
     c=db.cursor()
-    c.execute("SELECT user,country,money FROM consoomer")
+    c.execute("SELECT user,country,money, highest FROM consoomer")
     rows = c.fetchall()
     c.close()
     return rows
@@ -336,3 +358,6 @@ def balance_player(username):
     balance = balance[0]
     c.close()
     return balance
+
+def hard_coded():
+    add_user("aa","password","Canada")
