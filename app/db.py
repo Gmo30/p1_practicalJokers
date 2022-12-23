@@ -13,7 +13,7 @@ db=sqlite3.connect(DB_FILE, check_same_thread=False)
 c = db.cursor()
 db.executescript("""
 CREATE TABLE if not exists consoomer(user text, password text, country text, money int, highest int);
-CREATE TABLE if not exists country(country text, current int, recent int);
+CREATE TABLE if not exists country(name text, current int, recent int);
 CREATE TABLE if not exists dealercards(cardname text, cardname1 text, cardname2 text,cardname3 text,
     cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
@@ -22,7 +22,6 @@ CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
 Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
-Insert into consoomer values('aa', 'password', 'USA', '1000', '1000');
 """)
 c.close()
 #c = db.cursor()
@@ -33,6 +32,14 @@ c.close()
 #cursor fetchone
 # get tuple
 # for loop to check nones, then update cardnameN to card given
+
+def add_aa():
+    c=db.cursor()
+    c.execute("Select user from consoomer where user = ?", ("aa",))
+    if c.fetchone() == "":
+        c.pop()
+        c.execute("Insert into consoomer values('aa', 'password', 'USA', '1000', '1000')")
+        c.close()
 
 def user_exists(username):
     c=db.cursor()
@@ -71,7 +78,7 @@ def update_money_win(username, money_bet):
     c.execute("select money from consoomer where user = ?", (username,))
     before_bet = c.fetchone()
     after_bet = before_bet[0] + money_bet
-    c.execute("UPDATE consoomer SET money = after_bet WHERE user =?", (username,))
+    c.execute("UPDATE consoomer SET money = ? WHERE user =?", (after_bet, username))
     c.close()
     update_country(get_user_country(username), money_bet)
 
@@ -80,16 +87,16 @@ def update_money_lose(username, money_bet):
     c.execute("select money from consoomer where user = ?", (username,))
     before_bet = c.fetchone()
     after_bet = before_bet[0] - money_bet
-    c.execute("UPDATE consoomer SET money = after_bet WHERE user =?", (username,))
+    c.execute("UPDATE consoomer SET money = ? WHERE user =?", (after_bet, username))
     c.close()
     update_country(get_user_country(username), money_bet)
 
 def update_country(country, money_bet):
     c=db.cursor()
-    c.execute("select current from country where country = ?", (country,))
+    c.execute("select current from country where name = ?", (country,))
     old_current = c.fetchone()
     new_current = old_current + money_bet
-    c.execute("UPDATE country SET current = ?, recent = ? where country = ?", (new_current, money_bet, country))
+    c.execute("UPDATE country SET current = ?, recent = ? where name = ?", (new_current, money_bet, country))
     c.close()
 
 def get_user_country(username):
@@ -215,7 +222,7 @@ def get_dealer_value():
 
 def leaderboard_setup():
     c=db.cursor()
-    c.execute("SELECT country,highest,current FROM dabloons")
+    c.execute("SELECT country, current ,recent  FROM country")
     rows = c.fetchall()
     c.close()
     return rows
