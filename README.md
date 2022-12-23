@@ -1,6 +1,6 @@
 # Currency Exchange Blackjack by The Practical Jokers
-### PM: Gordon Mo
-### Devos: Ameer Alnasser, Ryan Lee
+### PM: Gordon Mo(HTML, DATABASE)
+### Devos: Ameer Alnasser(HTML, DATABASE), Ryan Lee(HTML,PYTHON)
 
 ### Summary: 
 A game of blackjack against the dealer, which is an AI that plays by the house rules (hit if under 17). If you lose the hand, a joke appears. If you win, you will earn that amount of money and the country you play as will also gain that much on the leaderboard. 
