@@ -318,3 +318,6 @@ def balance_player(username):
 
 def hard_coded():
     add_user("aa","password","Canada")
+    add_user("bb","password","Jordan")
+    add_user("cc","password","United Kingdom of Great Britain and Northern Ireland")
+    add_user("dd", "password", "Botswana")
