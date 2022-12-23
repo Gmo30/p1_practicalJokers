@@ -6,7 +6,6 @@ time spent: 8 hours
 """
 
 from flask import Flask, render_template, request, redirect, url_for, session
-import time
 from db import *
 from api import *
 app = Flask(__name__)
