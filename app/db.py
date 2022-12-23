@@ -92,6 +92,7 @@ def update_money_win(username, money_bet):
     after_bet = before_bet + money_bet
     c.execute("UPDATE userbase SET money = ? WHERE user =?", (after_bet, username))
     c.close()
+    update_user_highest(username)
     update_country_money(get_user_country(username), money_bet)
 
 def update_money_lose(username, money_bet):
@@ -126,16 +127,16 @@ def get_user_country(username):
     c.close()
     return country
 
-def update_user_highest(username, money_bet):
+def update_user_highest(username):
     c=db.cursor()
     c.execute("select highest, money from userbase where user = ?", (username,))
-    old_highest = c.fetchone()
-    c.pop()
-    c.close()
-    c=db.cursor()
-    money = c.fetchone()
+    output = c.fetchone()
+    old_highest, money = output[0], output[1]
+    print("money: ", money, "old_highest: ", old_highest)
     if(money > old_highest):
+        c=db.cursor()
         c.execute("UPDATE userbase SET highest = ? where user = ?", (money, username))
+        db.commit()
     c.close()
 
 
