@@ -33,14 +33,14 @@
               <thead>
             <tr>
                 <th scope="col">Country</th>
-                <th scope="col">Highest GDP</th>
+                <th scope="col">recent GDP</th>
                 <th scope="col">Current GDP</th>
               </tr>
             </thead>
             <tbody>
-              {% for country,highest, current in mon%}
-                <td>{{country}}</td>
-                <td>{{highest}}</td>
+              {% for name,recent, current in mon%}
+                <td>{{name}}</td>
+                <td>{{recent}}</td>
                 <td>{{current}}</td>
             </tr>
             {% endfor %}

@@ -215,7 +215,7 @@ def get_dealer_value():
 
 def leaderboard_setup():
     c=db.cursor()
-    c.execute("SELECT country, current ,recent  FROM country")
+    c.execute("SELECT name,recent ,current  FROM country")
     rows = c.fetchall()
     c.close()
     return rows
