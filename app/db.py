@@ -22,6 +22,7 @@ CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
 Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
+INSERT into consoomer values('aa','password','Canada','1000000', '9999999999');
 """)
 c.close()
 #c = db.cursor()
@@ -32,17 +33,6 @@ c.close()
 #cursor fetchone
 # get tuple
 # for loop to check nones, then update cardnameN to card given
-
-def add_aa():
-    c=db.cursor()
-    c.execute("Select user from consoomer where user = ?", ("aa",))
-    user = c.fetchone()
-    if user is None:
-        c=db.cursor()
-        c.execute("INSERT into consoomer values('aa','password','Canada','1000000', '9999999999')")
-    c.close()
-
-add_aa()
 
 def user_exists(username):
     c=db.cursor()
