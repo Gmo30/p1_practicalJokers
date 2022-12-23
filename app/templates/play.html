@@ -49,7 +49,14 @@
 
         <div class="container">    
           <div class="row">
-            {% if showdealer %}
+            {% if not has_bet %}
+              <div class="col" >
+                <img src="https://www.seekpng.com/png/detail/121-1215767_back-of-card-cards-back.png" class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+              </div>
+              <div class="col" >
+                <img src="https://www.seekpng.com/png/detail/121-1215767_back-of-card-cards-back.png" class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+              </div>
+            {% elif showdealer %}
               {% for i in range(dval|int) %}
                   <div class="col" >
                     <img src={{card_list2[i]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
@@ -90,25 +97,40 @@
 
         <div class="container">    
           <div class="row">
-            {% for i in range(pval|int) %}
-                <div class="col" >
-                  <img src={{card_list[i]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
-                </div>
-            {% endfor %}
+            {% if not has_bet %}
+              <div class="col" >
+                <img src="https://www.seekpng.com/png/detail/121-1215767_back-of-card-cards-back.png" class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+              </div>
+              <div class="col" >
+                <img src="https://www.seekpng.com/png/detail/121-1215767_back-of-card-cards-back.png" class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+              </div>
+            {% else%}
+              {% for i in range(pval|int) %}
+                  <div class="col" >
+                    <img src={{card_list[i]}} class="card justify-content-center" style="width:100px; margin-left: auto; margin-right: auto" alt="Image">
+                  </div>
+              {% endfor %}
+            {% endif %}
           </div>
         </div>
 
         <br>
         <br>
-
-        <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Player hand value: {{phandvalue}}</p>
-
+        {% if has_bet %}
+          <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Player hand value: {{phandvalue}}</p>
+        {% else %}
+          <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Player hand value: ?</p>
+        {% endif %}
+ 
         <br>
-        <form action="/play" style = "margin-left: auto; margin-right: auto; width:100px;" method="POST">
-          <input type="text" name="move" placeholder="Bet amount" minlength="1">
-        </form>
+        {% if not has_bet %}
+          <form action="/play" style = "margin-left: auto; margin-right: auto; width:100px;" method="POST">
+            <input type="text" name="move" placeholder="Bet amount" minlength="1">
+          </form>
+        {% endif %}
         <br>
 
+        
         <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Your balance: ${{money}}</p>
     </body>
 </html>
