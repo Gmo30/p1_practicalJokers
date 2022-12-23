@@ -12,9 +12,8 @@ DB_FILE="back.db"
 db=sqlite3.connect(DB_FILE, check_same_thread=False)
 c = db.cursor()
 db.executescript("""
-CREATE TABLE if not exists consoomer(user text, password text, country text, money int);
-CREATE TABLE if not exists dabloons(country text, highest real, current real, recent real);
-CREATE TABLE if not exists country(country text, GDP int);
+CREATE TABLE if not exists consoomer(user text primary key, password text, country text, money int, highest int);
+CREATE TABLE if not exists country(country text, current int, recent int);
 CREATE TABLE if not exists dealercards(cardname text, cardname1 text, cardname2 text,cardname3 text,
     cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
@@ -74,6 +73,7 @@ def update_money_win(username, money_bet):
     after_bet = before_bet[0] + money_bet
     c.execute("UPDATE consoomer SET money = after_bet WHERE user =?", (username,))
     c.close()
+    update_country(get_user_country(username), money_bet)
 
 def update_money_lose(username, money_bet):
     c=db.cursor()
@@ -82,6 +82,33 @@ def update_money_lose(username, money_bet):
     after_bet = before_bet[0] - money_bet
     c.execute("UPDATE consoomer SET money = after_bet WHERE user =?", (username,))
     c.close()
+    update_country(get_user_country(username), money_bet)
+
+def update_country(country, money_bet):
+    c=db.cursor()
+    c.execute("select current from country where country = ?", (country,))
+    old_current = c.fetchone()
+    new_current = old_current + money_bet
+    c.execute("UPDATE country SET current = ?, recent = ? where country = ?", (new_current, money_bet, country))
+    c.close()
+
+def get_user_country(username):
+    c=db.cursor()
+    c.execute("select country from consoomer where user = ?", (username,))
+    country = c.fetchone()
+    c.close()
+    return country 
+
+def update_user_highest(username, money_bet):
+    c=db.cursor()
+    c.execute("select highest, money from consoomer where user = ?", (username,))
+    old_highest = c.fetchone()
+    c.pop()
+    money = c.fetchone()
+    if(money > old_highest): 
+        c.execute("UPDATE consoomer SET highest = ? where user = ?", (money, username))
+    c.close()
+        
 
 def add_player_card(value, card):
     c=db.cursor()

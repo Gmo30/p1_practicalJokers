@@ -8,7 +8,7 @@ import requests
 import os
 from db import *
 
-list_of_countries = {"USA": "USD", "Canada":"CAD", "United Kingdom":"GBP"}
+#list_of_countries = {"USA": "USD", "Canada":"CAD", "United Kingdom":"GBP"}
 
 def joke():
     text = requests.get("https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single")
@@ -81,7 +81,7 @@ def get_exchange(country1, country2, amt):
 def get_currency(country):
     return(list_of_countries[country])
 
-def get_countries():
+def get_countries(list_of_countries):
     all_countries = []
     for key in list_of_countries:
         all_countries.append(key)
@@ -106,7 +106,21 @@ def get_both_hands(deckid):
 
     return pcardlist, dcardlist
 
-
+def fill_country_dict():
+    list_of_countries = {}
+    text = requests.get("https://restcountries.com/v2/all?fields=name,currencies")
+    json = text.json()
+    #print(len(json))
+    for i in range(len(json)-1):
+        #print(json[i]["name"])
+        if "currencies" in json[i]:
+            #print(json[i]["name"])
+            #print(json[i]["currencies"][0]["code"])
+            list_of_countries[json[i]["name"]] = json[i]["currencies"][0]["code"]
+    return list_of_countries 
+#print(json[1])
+print(fill_country_dict())
+#print(list_of_countries)
 #print(get_countries())
 #print(get_currency("Canada"))
 #print(get_exchange("USA", "Canada", 100))
