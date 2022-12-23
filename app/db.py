@@ -71,7 +71,7 @@ def check_pass(username, password):
         c.close()
         return False
 
-def update_country(user_new,country_new):
+def update_user_country(user_new,country_new):
     c=db.cursor()
     db.execute("UPDATE consoomer Set country = ? where user=?", (str(country_new), str(user_new)))
     c.close()
@@ -83,7 +83,7 @@ def update_money_win(username, money_bet):
     after_bet = before_bet[0] + money_bet
     c.execute("UPDATE consoomer SET money = ? WHERE user =?", (after_bet, username))
     c.close()
-    update_country(get_user_country(username), money_bet)
+    update_country_money(get_user_country(username), money_bet)
 
 def update_money_lose(username, money_bet):
     c=db.cursor()
@@ -92,9 +92,9 @@ def update_money_lose(username, money_bet):
     after_bet = before_bet[0] - money_bet
     c.execute("UPDATE consoomer SET money = ? WHERE user =?", (after_bet, username))
     c.close()
-    update_country(get_user_country(username), money_bet)
+    update_country_money(get_user_country(username), money_bet)
 
-def update_country(country, money_bet):
+def update_country_money(country, money_bet):
     c=db.cursor()
     c.execute("select current from country where name = ?", (country,))
     old_current = c.fetchone()

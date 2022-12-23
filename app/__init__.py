@@ -346,7 +346,7 @@ def profile():
         return redirect(url_for('login'))
     if(request.method == "POST"):
         country = request.form["country"]
-        update_country(session['username'], country)
+        update_user_country(session['username'], country)
         return render_template('profile.html', username = session['username'], message = "Updated country")
 
     return render_template('profile.html', username = session['username'], joke = joke(), all_countries = get_countries())
