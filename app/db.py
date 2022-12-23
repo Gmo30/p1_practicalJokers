@@ -66,8 +66,8 @@ def add_user(username, password, country):
     c=db.cursor()
     if not user_exists(username):
         c.execute("Insert into userbase values(?,?,?,?,?)", (username, password, country, "1000", "1000"))
-    update_country_money(country, balance_player(username))
     db.commit()
+    update_country_money(country, balance_player(username))
     c.close()
 
 def check_pass(username, password):
