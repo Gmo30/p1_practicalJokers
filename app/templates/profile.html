@@ -41,9 +41,9 @@
       <div class="col-sm">
         <select class="form-select" name= "country" aria-label="country selected">
           <option selected>Change your country</option>
-          <option value="USA">USA</option>
-          <option value="Canada">Canada</option>
-          <option value="United Kingdom">United Kingdom</option>
+          {%for country in all_countries%}
+          <option value="{{country}}">{{country}}</option>
+          {%endfor%}
         </select>
       </div>
       <div class="col-sm">

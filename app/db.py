@@ -12,7 +12,7 @@ DB_FILE="back.db"
 db=sqlite3.connect(DB_FILE, check_same_thread=False)
 c = db.cursor()
 db.executescript("""
-CREATE TABLE if not exists consoomer(user text primary key, password text, country text, money int, highest int);
+CREATE TABLE if not exists consoomer(user text, password text, country text, money int, highest int);
 CREATE TABLE if not exists country(country text, current int, recent int);
 CREATE TABLE if not exists dealercards(cardname text, cardname1 text, cardname2 text,cardname3 text,
     cardname4 text, cardname5 text, cardname6 text, cardname7 text, cardname8 text,
@@ -22,7 +22,7 @@ CREATE TABLE if not exists playercards(cardname text, cardname1 text, cardname2 
     cardname9 text, cardname10 text, cardname11 text,  total_value int);
 Insert into dealercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
 Insert into playercards values('None','None','None','None','None','None','None','None','None','None','None','None',0);
-Insert into consoomer values(?,?,?,?), ('aa', 'password', 'USA', '1000');
+Insert into consoomer values('aa', 'password', 'USA', '1000', '1000');
 """)
 c.close()
 #c = db.cursor()
@@ -47,7 +47,7 @@ def user_exists(username):
 
 def add_user(username, password, country):
     c=db.cursor()
-    c.execute("Insert into consoomer values(?,?,?,?)", (username, password, country, "1000"))
+    c.execute("Insert into consoomer values(?,?,?,?)", (username, password, country, "1000", "1000"))
     c.close()
 
 def check_pass(username, password):

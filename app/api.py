@@ -81,8 +81,9 @@ def get_exchange(country1, country2, amt):
 def get_currency(country):
     return(list_of_countries[country])
 
-def get_countries(list_of_countries):
+def get_countries():
     all_countries = []
+    list_of_countries = fill_country_dict()
     for key in list_of_countries:
         all_countries.append(key)
     return all_countries
@@ -119,7 +120,7 @@ def fill_country_dict():
             list_of_countries[json[i]["name"]] = json[i]["currencies"][0]["code"]
     return list_of_countries 
 #print(json[1])
-print(fill_country_dict())
+#print(fill_country_dict())
 #print(list_of_countries)
 #print(get_countries())
 #print(get_currency("Canada"))
