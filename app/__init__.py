@@ -349,15 +349,11 @@ def leaderboard():
 def profile():
     if 'username' not in session:
         return redirect(url_for('login'))
-    if(request.method == "GET"):
-        update_joke(session['username'], joke())
-        return render_template('profile.html', username = session['username'], joke = get_joke(session['username']))
     if(request.method == "POST"):
         country = request.form["country"]
         update_user_country(session['username'], country)
-        return render_template('profile.html', username = session['username'], message = "Updated country")
-
-    return render_template('profile.html', username = session['username'], joke = get_joke(session['username']), all_countries = get_countries())
+        return render_template('profile.html', username = session['username'], joke = joke(), message = "Updated country")
+    return render_template('profile.html', username = session['username'], joke = joke(), all_countries = get_countries())
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change

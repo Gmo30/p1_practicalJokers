@@ -38,8 +38,6 @@
     </form>
         
         <br>
-        <br>
-        <br>
 
         {% if showdealer %}
           <p style = "text-align:center; font-family: Copperplate; font-size: 30px;">Dealer hand value: {{dhandvalue}}</p>
@@ -74,15 +72,17 @@
             {% endif %}
           </div>
         </div>
-
         <br>
         <br>
         <br>
         <h2 class="text-center">{{message}}</h2>
+        {% if not has_bet %}
+          <form action="/play" style = "margin-left: auto; margin-right: auto; width:100px;" method="POST">
+            <input type="text" name="move" placeholder="Bet amount" minlength="1">
+          </form>
+        {% endif %}
         <br>
         <br>
-        <br>
-        
         <form action = "/play" class ="row justify-content-center text-center" method = "POST">
           <div class="col"> 
             <button type="submit" name="move" value = "hit" class="btn btn-outline-light">HIT</button> 
@@ -93,8 +93,6 @@
         </form>
 
         <br>
-        <br>
-
         <div class="container">    
           <div class="row">
             {% if not has_bet %}
@@ -123,11 +121,6 @@
         {% endif %}
  
         <br>
-        {% if not has_bet %}
-          <form action="/play" style = "margin-left: auto; margin-right: auto; width:100px;" method="POST">
-            <input type="text" name="move" placeholder="Bet amount" minlength="1">
-          </form>
-        {% endif %}
         <br>
 
         
