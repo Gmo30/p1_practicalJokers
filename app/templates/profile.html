@@ -34,6 +34,9 @@
         <h1>howdy <span style="color:cyan"> {{username}} </span></h1>
         <br>
         <h3 class="text-danger">{{joke}}</h3>
+        <form action="/profile" method="GET">
+          <button type="submit" name="joke" class="btn btn-outline-dark">Change joke</button>
+        </form>
     </div>
     </div>
     <h3>{{message}}</h3>

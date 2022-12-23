@@ -350,7 +350,8 @@ def profile():
     if 'username' not in session:
         return redirect(url_for('login'))
     if(request.method == "GET"):
-        new_joke = joke()
+        update_joke(session['username'], joke())
+        return render_template('profile.html', username = session['username'], joke = get_joke(session['username']))
     if(request.method == "POST"):
         country = request.form["country"]
         update_user_country(session['username'], country)

@@ -56,7 +56,7 @@ def add_joke(username, joke):
 
 def update_joke(username, joke):
     c=db.cursor()
-    c.execute("UPDATE jokes SET joke = ? where user = ?", (joke, user))
+    c.execute("UPDATE jokes SET joke = ? where user = ?", (joke, username))
     c.close()
 
 def get_joke(username):
