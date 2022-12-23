@@ -6,7 +6,8 @@ pd 8
 ---------------------
 Currency Exchange BlackJack w/ a Joke
 
-
+Changes since v0:
+The implementation of currencyexchange proved too daunting, so we instead used the country API to display all countries
  ______   ______   __   __   __       ______   _______     
 /_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
 \:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
@@ -133,7 +134,7 @@ ameerA ryanL gordonM-- 2022-12-20 16:31
 Planned out play page working on hit and stand button.
 ==============================================================
 
-gordonM-- 2022-12-17 21:34
+gordonM-- 2022-12-20 21:34
 --------------------------------------------------------------
 worked on play page flask and html stuff. Trying to get play working. 
 ==============================================================
@@ -167,6 +168,7 @@ ameerA-- 2022-12-23 02:14
 --------------------------------------------------------------
 Finished, fixed ace error, fixed duplication, fixed leaderboard.
 ==============================================================
+
 ameerA-- 2022-12-23 02:34
 --------------------------------------------------------------
 Final commit. Have a fantastic holidays everyone!
