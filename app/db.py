@@ -66,6 +66,7 @@ def add_user(username, password, country):
     c=db.cursor()
     if not user_exists(username):
         c.execute("Insert into userbase values(?,?,?,?,?)", (username, password, country, "1000", "1000"))
+    update_country_money(country, balance_player(username))
     db.commit()
     c.close()
 
@@ -104,7 +105,7 @@ def update_money_lose(username, money_bet):
     after_bet = before_bet - money_bet
     c.execute("UPDATE userbase SET money = ? WHERE user =?", (after_bet, username))
     c.close()
-    update_country_money(get_user_country(username), money_bet)
+    update_country_money(get_user_country(username), -money_bet)
 
 def update_country_money(country, money_bet):
     c=db.cursor()

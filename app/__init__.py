@@ -50,7 +50,8 @@ def register():
         password = request.form['password']
         password_confirm = request.form['password_confirm']
         country = request.form['country']
-        print(country)
+        if country:
+            add_country(country, 0, 0)
         if(len(username) == 0):
                 return render_template('register.html', message = "User is too short")
         if(user_exists(username)):
